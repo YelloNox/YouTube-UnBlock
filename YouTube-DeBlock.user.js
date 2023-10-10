@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YouTube DeBlock
-// @description  Working 2023 adblock for YouTube video. Uses "yout-ube.com" and replaces all videos with embeds.
+// @description  Semi-working 2023 adblock for YouTube video. Uses "yout-ube.com" and replaces all videos with embeds.
 // @author       YelloNolo
 // @version      0.9
 // @date         2023-10-10
