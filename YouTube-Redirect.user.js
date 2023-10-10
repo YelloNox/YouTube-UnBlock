@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         YouTube Adblock
+// @name         YouTube Redirect
 // @description  Working 2023 adblock for YouTube video. Redirects all "youtube.com" links to yout-ube.com.
 // @author       YelloNolo
 // @version      0.2
@@ -12,10 +12,10 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
     // Redirect clicked links to new tab and from "youtube.com" to "yout-ube.com"
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         let target = event.target;
         while (target && target.nodeName !== 'A') {
             target = target.parentElement;
