@@ -9,16 +9,15 @@ Enabling this Tampermonkey script will redirect all videos links from "youtube.c
 ## How To Use
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other userscript manager.
 2. There are two current versions of the script:
-   - "YouTube Redirect.user.js" Redirects all links from "youtube.com" to "yout-ube.com".
-   - "YouTube Ad Remove.user.js" Removes the block and embeds the video from "yout-ube.com". 
-      - <span style="color:red">This is currently a work in progress and has many bugs.</span>
+   - "YouTube Redirect.user.js" Redirects all links from "youtube.com" to "yout-ube.com"
+   - "YouTube Ad Remove.user.js" Removes the junk and embeds the video from "yout-ube.com" (🔴 Buggy 🔴)
 3. Click on the script you want to install, and click "RAW"
 
 ## Version Comparison
 | File | Pros | Cons |
 | --- | --- | --- |
 | "[YouTube-Redirect.user.js](/YouTube-Redirect.user.js)" | - No Ads<br>- Fullscreen | - No YouTube history<br>- No comments<br>- Fullscreen Only |
-| "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)" | - No Ads<br>- Comments| - No YouTube history<br>- Unable to view fullscreen<br>- <span style="color:red">Many bugs</span> |
+| "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)" | - No Ads<br>- Comments| - No YouTube history<br>- Unable to view fullscreen<br>🔴 Many bugs 🔴 |
 
 
 ## Issues?

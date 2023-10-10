@@ -56,7 +56,7 @@
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
         const iframeText = iframeDocument.body.textContent;
 
-        setTimeout(function () {
+        setTimeout(function() {
             if (iframeText.includes(textToFind)) {
                 iframe.contentWindow.location.reload();
                 console.log("A");
@@ -80,10 +80,7 @@
     function removeAndReplace() {
         removeElementsByClassName('ytd-enforcement-message-view-model');
         replaceVideoToEmbed('yt-playability-error-supported-renderers');
-        setTimeout(function () {
-            checkForUnavailable();
-        }, 3000);
-        checkForUnavailable();
+        //setTimeout(function() { checkForUnavailable(); }, 3000); checkForUnavailable();
     }
 
     // Function to run when the button is clicked
