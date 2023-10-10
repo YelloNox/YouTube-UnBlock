@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YouTube Adblock
-// @description  Working 2023 anblock for YouTube video links by redirecting all clicks to yout-ube.com
+// @description  Working 2023 adblock for YouTube video. Redirects all "youtube.com" links to yout-ube.com.
 // @author       YelloNolo
 // @version      0.2
 // @date         2023-10-10
@@ -14,7 +14,7 @@
 
 (function() {
     'use strict';
-    //Redirect clicked links to new tab and from "youtube.com" to "yout-ube.com"
+    // Redirect clicked links to new tab and from "youtube.com" to "yout-ube.com"
     document.addEventListener('click', function(event) {
         let target = event.target;
         while (target && target.nodeName !== 'A') {
@@ -33,6 +33,7 @@
         }
     }, true);
 
+    // Check for text "This video is unavailable" and reload page if found
     function checkForText() {
         const textToFind = "This video is unavailable";
         const pageText = document.body.textContent;
