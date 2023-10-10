@@ -17,8 +17,8 @@ Enabling this Tampermonkey script will redirect all videos links from "youtube.c
 ## Version Comparison
 | File | Pros | Cons |
 | --- | --- | --- |
-| "[YouTube-Redirect.user.js](/blob/main/YouTube-Redirect.user.js)" | - No Ads<br>- Fullscreen | - No YouTube history<br>- No comments<br>- Fullscreen Only |
-| "[YouTube-DeBlock.user.js](/blob/main/YouTube-DeBlock.user.js)" | - No Ads<br>- Comments| - No YouTube history<br>- Unable to view fullscreen<br>- <span style="color:red">Many bugs</span> |
+| "[YouTube-Redirect.user.js](/YouTube-Redirect.user.js)" | - No Ads<br>- Fullscreen | - No YouTube history<br>- No comments<br>- Fullscreen Only |
+| "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)" | - No Ads<br>- Comments| - No YouTube history<br>- Unable to view fullscreen<br>- <span style="color:red">Many bugs</span> |
 
 
 ## Issues?
