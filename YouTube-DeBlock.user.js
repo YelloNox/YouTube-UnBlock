@@ -19,6 +19,7 @@
         });
     }
 
+
     let globalFrame;
     // Function that replaces the video with an embed of "yout-ube.com". It finds the video by searching for the class name.
     function replaceVideoToEmbed(className, newDomain) {
@@ -42,6 +43,7 @@
         });
     }
 
+    // Removes the original video frame.
     function removeOgIframe() {
         const iframes = document.querySelectorAll('iframe');
         console.log("beginning the removal");
@@ -54,6 +56,7 @@
         });
     }
 
+    // Embeds the new video into the page
     function updateVideoToNewFrame(className, newDomain) {
         const elements = document.querySelectorAll("." + className);
         const newURL = getNewURL(newDomain);
@@ -77,6 +80,7 @@
         });
     }
 
+    // Temp function from testing. It tries to find if the video is unavalible, but is yet to work.
     function tmp() {
         const textToFind = "This video is unavailable";
 
@@ -100,20 +104,15 @@
         }
     }
 
+    // Adds youtube.com to all nameless redirects
     function addDomainToURLs() {
-        // Select all anchor (link) elements on the page
         const links = document.querySelectorAll('a');
 
-        // Loop through each link and modify the href attribute
         links.forEach(link => {
             let href = link.getAttribute('href');
-
-            // Check if the href doesn't start with "http" or "www"
             if (href && !href.startsWith('http') && !href.startsWith('www')) {
-                // Prepend "youtube.com" to the href
                 href = 'https://www.youtube.com' + href;
 
-                // Update the href attribute with the modified value
                 link.setAttribute('href', href);
             }
         });
@@ -168,15 +167,42 @@
     }
 
     // Function that checks if the page is even blocked
-    function onCheckForBlock() {
-        null;
+    function checkForClass() {
+        // The site that will replace the broken domain
+        const newDomain = "yout-ube.com";
+        // Any class the blocker uses to find the message.
+        const blockerClass = 'ytd-enforcement-message-view-model';
+        // Any class the broken video uses to be replaced.
+        const ogVideoClass = 'yt-playability-error-supported-renderers';
+        // Replace temp class
+        const tempReplaceClass = "replaceme";
+
+        // Check to find "ad"
+        const elements = document.querySelectorAll('.' + tempReplaceClass);
+        if (elements) {
+            replaced = false;
+        }
+
+        // Webpage Search for Class(s)
+        const ogVideoClassFinder = document.querySelectorAll("." + ogVideoClass);
+        const tempReplaceClassFinder = document.querySelectorAll("." + tempReplaceClass);
+
+        if (!replaced) {
+            removeElementsByClassName(blockerClass);
+            replaceVideoToEmbed(ogVideoClass, newDomain);
+            replaced = true;
+        } else if (replaced) {
+            updateVideoToNewFrame(tempReplaceClass, newDomain);
+        }
+
+        addDomainToURLs();
     }
 
     //window.addEventListener('load', onCheckForBlock);
 
     // Button for testing. I've yet to get the page to auto load. It also helps with debugging.
     const button = document.createElement('button');
-    button.textContent = 'Remove Enforcement';
+    button.textContent = 'Force Fix';
     button.style.position = 'fixed';
     button.style.top = '10px';
     button.style.right = '10px';
@@ -186,8 +212,11 @@
     button.addEventListener('click', onButtonClick);
     document.body.appendChild(button);
 
-    // Tried to fix bugs such as the video playing in the background after opening a new one.
-    // window.addEventListener('load', addDomainToLinks);
+    // Run on page load
+    const classCheckInterval = setInterval(checkForClass, 1000);
+    document.addEventListener('click', checkForClass, 1000);
+    // Clear iframe on link click
+    window.addEventListener('popstate', removeOgIframe);
 
 
 })();
