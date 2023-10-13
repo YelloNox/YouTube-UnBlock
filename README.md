@@ -1,6 +1,11 @@
 # YouTube UnBlock
 **Status:** This project is fully functional as of 10/11/2023.
 
+## Is this blocker getting in the way?
+![indeed an image](/img/YouTube-ad-blocker-experiment.avif)
+
+## 🩹 Look no further, as here is a bandaid
+
 Enabling this Tampermonkey script will redirect all videos from "youtube.com" to "yout-ube.com". 
 - The "[Redirect](/YouTube-Redirect.user.js)" script redirects you to [yout-ube](https://yout-ube.com).
 - The "[DeBlock](/YouTube-DeBlock.user.js)" script embeds [yout-ube](https://yout-ube.com) into the [YouTube](https://youtube.com)(official) page.
