@@ -4,8 +4,8 @@
 ## Is this blocker getting in the way?
 ![indeed an image](/img/YouTube-ad-blocker-experiment.png)
 
-## 🩹 Look no further, as here is a bandaid
-The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds an select [Outside Source](#custom-sources) in the place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and reccommendations. There are only a few cons [Found Here](#cons)
+## 🩹 Look no further, as here is a bandied
+The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [Outside Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations. There are only a few cons [Found Here](#cons)
 
 >Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
 
@@ -30,23 +30,24 @@ Pros
   - Comments
   - Likes
   - Playlists
-  - Reccommendations
+  - Recommendations
 - Stays on YouTube
 
 Cons
 ---
 - Only unblocked videos will be added to YouTube history, with an [exception](#exceptions).
-- Fullscreen Broken
+- Full-Screen Broken
 
 ## Exceptions
 This script will not run if a block is not detected. Meaning, videos without blocks will be added to history.
 
-# Custom Sources
+# Custom Sources - Comming Soon
 - [yout-ube.com](https://yout-ube.com)
 - [nsfwyoutube.com](https://nsfwyoutube.com)
+- Reccommend Some More to [Issues](/issues/3)
 
 ## Issues?
-If there any issues or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
+If there are any issues or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
 
 ## Other Locations
 You can currently find the script in:
