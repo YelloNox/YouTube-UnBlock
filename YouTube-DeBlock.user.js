@@ -11,21 +11,45 @@
 // ==/UserScript==
 
 (function () {
+    // The site that will replace the broken domain
+    const newDomain = "yout-ube.com";
+    // Any class the blocker uses to find the message.
+    const blockerClass = 'ytd-enforcement-message-view-model';
+    // Any class the broken video uses to be replaced.
+    const ogVideoClass = 'yt-playability-error-supported-renderers';
+    // Video Site
+    const youtubeURL = "youtube.com";
+
+
+    // --- Do Not Touch --- //
+    // Temp Functions //
+    const tempReplaceClass = "replaceme";
+    let isBlocked = true;
+    let isSubclick = false;
+    var updatedURL = window.location.href;
+    // Sets new domain
+    function redirectDomain() {
+        var userChoice = 1;
+        var domainList = [
+            "yout-ube.com",
+            "nsfwyoutube.com"
+        ];
+        return redirectDomain(domainList[userChoice]);
+    }
+
     // Function remove the "ad" from the page. It finds the "ad" by searching for the class name.
-    function removeElementsByClassName(className) {
-        const elements = document.querySelectorAll('.' + className);
+    function removeElementsByClassName() {
+        const elements = document.querySelectorAll('.' + blockerClass);
         elements.forEach(element => {
             element.remove();
         });
     }
 
-
+    // Create video embedding frame
     let globalFrame;
-    // Function that replaces the video with an embed of "yout-ube.com". It finds the video by searching for the class name.
-    function replaceVideoToEmbed(className, newDomain) {
-        const currentURL = window.location.href;
+    function createJFrame(classToOverturn) {
         const newURL = getNewURL(newDomain);
-        const elements = document.querySelectorAll("." + className);
+        const elements = document.querySelectorAll("." + classToOverturn);
 
         elements.forEach(element => {
             const iframe = document.createElement('iframe');
@@ -43,49 +67,33 @@
         });
     }
 
+
     // Removes the original video frame.
     function removeOgIframe() {
         const iframes = document.querySelectorAll('iframe');
         console.log("beginning the removal");
         iframes.forEach(iframe => {
             const paragraph = document.createElement('p');
-            paragraph.className = 'replaceme';
+            paragraph.className = tempReplaceClass;
             iframe.parentNode.insertBefore(paragraph, iframe);
             iframe.remove();
-            console.log("out with the old");
+            console.log("Out with the old");
         });
     }
 
     // Embeds the new video into the page
-    function updateVideoToNewFrame(className, newDomain) {
-        const elements = document.querySelectorAll("." + className);
-        const newURL = getNewURL(newDomain);
-        console.log("frame: " + elements);
-
+    function updateVideoToNewFrame() {
         removeOgIframe();
-
-        elements.forEach(element => {
-            const iframe = document.createElement('iframe');
-            iframe.src = newURL;
-            iframe.width = '100%';
-            iframe.height = '100%';
-            iframe.zIndex = '9999';
-            iframe.allowfullscreen = 'true';
-
-            globalFrame = iframe;
-
-            // Replace the existing element with the custom URL
-            element.parentNode.replaceChild(iframe, element);
-            console.log("In with the new: " + newURL);
-        });
+        createJFrame(tempReplaceClass);
+        console.log("In with the new");
     }
 
     // Temp function from testing. It tries to find if the video is unavalible, but is yet to work.
     function tmp() {
         const textToFind = "This video is unavailable";
 
-        setTimeout(function() {
-            for (let i=0;i<=100;i++) {
+        setTimeout(function () {
+            for (let i = 0; i <= 100; i++) {
                 if (window.includes(textToFind)) {
                     reloadPage();
                     console.log("Fetch Error Found... Reloading...");
@@ -98,37 +106,28 @@
     // Function to replace "youtube.com" with "yout-ube.com"
     function getNewURL(newDomain) {
         const currentURL = window.location.href;
-        if (currentURL.includes("youtube.com")) {
-            const newURL = currentURL.replace("youtube.com", newDomain);
+        if (currentURL.includes(youtubeURL)) {
+            const newURL = currentURL.replace(youtubeURL, newDomain);
             return newURL;
         }
     }
 
-    // Adds youtube.com to all nameless redirects
+    // Adds "youtube.com" to all nameless urls on webpage
     function addDomainToURLs() {
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
             let href = link.getAttribute('href');
             if (href && !href.startsWith('http') && !href.startsWith('www')) {
-                href = 'https://www.youtube.com' + href;
+                href = 'https://www.' + youtubeURL + href;
 
                 link.setAttribute('href', href);
             }
         });
-
     }
 
     function reloadPage() {
-
         location.reload();
-    }
-
-    function reloadFrame() {
-        const iframe = document.querySelectorAll('iframe');
-        if (iframe) {
-            iframe.contentWindow.location.reload();
-        }
     }
 
     // Just for testing...
@@ -137,29 +136,22 @@
         console.log(testNewURL);
     }
 
-    // Has the video allready been replaced?
-    let replaced = false;
-
-    // Function to run when the button is clicked
-    function onButtonClick() {
-        // Any class the blocker uses to find the message.
-        const blockerClass = 'ytd-enforcement-message-view-model';
-        // Any class the broken video uses to be replaced.
-        const ogVideoClass = 'yt-playability-error-supported-renderers';
-        // The site that will replace the broken domain
-        const newDomain = "yout-ube.com";
-        // Replace temp class
-        const tempReplaceClass = "replaceme";
-
-        console.log("Replaced: " + replaced);
-        removeElementsByClassName(blockerClass);
-        if (!replaced) {
-            console.log("newing");
-            replaceVideoToEmbed(ogVideoClass, newDomain);
-            replaced = true;
+    function replaceVideo() {
+        if (!isSubclick) {
+            console.log("replacing");
+            removeElementsByClassName();
+            createJFrame(ogVideoClass);
+            isSubclick = true;
         } else {
+            console.log("replacing subclick");
             updateVideoToNewFrame(tempReplaceClass, newDomain);
         }
+        isBlocked = false;
+    }
+
+    // Function to run when the button is clicked
+    function forceFix() {
+        replaceVideo();
         addDomainToURLs();
 
         console.log("clicked");
@@ -167,56 +159,81 @@
     }
 
     // Function that checks if the page is even blocked
-    function checkForClass() {
-        // The site that will replace the broken domain
-        const newDomain = "yout-ube.com";
-        // Any class the blocker uses to find the message.
-        const blockerClass = 'ytd-enforcement-message-view-model';
-        // Any class the broken video uses to be replaced.
-        const ogVideoClass = 'yt-playability-error-supported-renderers';
-        // Replace temp class
-        const tempReplaceClass = "replaceme";
-
-        // Check to find "ad"
-        const elements = document.querySelectorAll('.' + tempReplaceClass);
-        if (elements) {
-            replaced = false;
-        }
-
+    function checkClass() {
         // Webpage Search for Class(s)
-        const ogVideoClassFinder = document.querySelectorAll("." + ogVideoClass);
-        const tempReplaceClassFinder = document.querySelectorAll("." + tempReplaceClass);
-
-        if (!replaced) {
-            removeElementsByClassName(blockerClass);
-            replaceVideoToEmbed(ogVideoClass, newDomain);
-            replaced = true;
-        } else if (replaced) {
-            updateVideoToNewFrame(tempReplaceClass, newDomain);
+        if (isBlocked) {
+            console.log("Replacing Original");
+            replaceVideo();
+            addDomainToURLs();
+        } else {
+            urlTracker();
         }
-
-        addDomainToURLs();
     }
 
-    //window.addEventListener('load', onCheckForBlock);
+    function urlTracker() {
+        var currentURL = window.location.href;
 
-    // Button for testing. I've yet to get the page to auto load. It also helps with debugging.
+        if (currentURL != updatedURL) {
+            console.log("Found New URL");
+            updatedURL = window.location.href;
+
+            isBlocked = true;
+        } else {
+            console.log("checking");
+        }
+
+    }
+
+    var css = `
+    .custom-btn:hover {
+        transform: scale(0.95);
+    }
+    .custom-btn:active {
+        transform: scale(0.8);
+        border: none !important;
+
+        transition: transform 0.1s ease;
+    }
+    .custom-btn {
+        position: relative;
+        displaty: inline-block;
+        padding: 9px;
+        margin-right: 16px;
+        margin-left: 16px;
+        color: white;
+        background-color: transparent;
+        box-shadow: none;
+        text-shadow: none;
+        border: 1px solid white;
+        border-radius: 0px;
+        z-index: 9999;
+
+        transition: transform 0.3s ease;
+    }
+    `;
+
+    // Add custom css to page
+    var style = document.createElement("style");
+    style.appendChild(document.createTextNode(css));
+
+    document.head.appendChild(style);
+
+    // Create Button
     const button = document.createElement('button');
-    button.textContent = 'Force Fix';
-    button.style.position = 'fixed';
-    button.style.top = '10px';
-    button.style.right = '10px';
-    button.style.zIndex = '9999';
+    button.textContent = 'Reload Frame';
+    button.id.add = "button";
+    button.classList.add("custom-btn");
+
+    // Add button to page
+    var exsistingParent = document.getElementById("end");
+    exsistingParent.insertBefore(button, exsistingParent.firstChild);
 
     // Listen
-    button.addEventListener('click', onButtonClick);
-    document.body.appendChild(button);
+    button.addEventListener('click', forceFix);
 
-    // Run on page load
-    const classCheckInterval = setInterval(checkForClass, 1000);
-    document.addEventListener('click', checkForClass, 1000);
-    // Clear iframe on link click
-    window.addEventListener('popstate', removeOgIframe);
-
+    // Run every second to check for updates on page
+    // Will not ping any server till a new page is clicked
+    const classCheckInterval = setInterval(checkClass, 1000);
+    document.addEventListener('click', checkClass, 1000);
 
 })();

@@ -1,40 +1,49 @@
 # YouTube UnBlock
-**Status:** This project is fully functional as of 10/11/2023.
+**Status:** This project is fully functional as of 10/14/2023.
 
 ## Is this blocker getting in the way?
 ![indeed an image](/img/YouTube-ad-blocker-experiment.avif)
 
 ## 🩹 Look no further, as here is a bandaid
+The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds an select [Outside Source](#custom-sources) in the place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and reccommendations. There are only a few cons [Found Here](#cons)
 
-Enabling this Tampermonkey script will redirect all videos from "youtube.com" to "yout-ube.com". 
-- The "[Redirect](/YouTube-Redirect.user.js)" script redirects you to [yout-ube](https://yout-ube.com).
-- The "[DeBlock](/YouTube-DeBlock.user.js)" script embeds [yout-ube](https://yout-ube.com) into the [YouTube](https://youtube.com)(official) page.
+>Note: I am not the creator of the [Outside Sources](#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
 
->Note: I am not the creator of [yout-ube.com](https://yout-ube.com) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
+>This script does not block ads, you will need your own. I reccommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also reccommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
 
+<br>
 
 ## Github Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other userscript manager.
-2. There are two current versions of the script:
-   - "[YouTube-Redirect.user.js](/YouTube-Redirect.user.js)" 
-   - "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)"
-   >You can find the comparison below.
-3. Using github, you will need to open the script in github, then click the "Raw" button at the top right of the page.
+2. Open the script: "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)"
+3. Click the "Raw" button at the top right of the page, this should prompt the userscript install page.
 
 ## Greasy Fork Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other userscript manager.
-2. Click install on the Greasy Fork webpage for one of the following scripts:
-   - [YouTube Redirect](https://greasyfork.org/en/scripts/477097-youtube-redirect)
-   - [YouTube DeBlock](https://greasyfork.org/en/scripts/477098-youtube-deblock)
+2. Click install on the Greasy Fork webpage: [YouTube DeBlock](https://greasyfork.org/en/scripts/477098-youtube-deblock)
 
 
+Pros
+---
+- No Blockers
+- Access to:
+  - Comments
+  - Likes
+  - Playlists
+  - Reccommendations
+- Stays on YouTube
 
-## Version Comparison
-| File | Pros | Cons |
-| --- | --- | --- |
-| "[YouTube-Redirect.user.js](/YouTube-Redirect.user.js)" | - No Ads<br>- Fullscreen | - No YouTube history<br>- No comments<br>- Fullscreen Only |
-| "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)" | - No Ads<br>- Comments<br>- Dosen't Leave YouTube | - No YouTube history<br>- Fullscreen Broken<br>🔴 Some bugs |
+Cons
+---
+- Only unblocked videos will be added to YouTube history, with an [exception](#exceptions).
+- Fullscreen Broken
 
+## Exceptions
+This script will not run if a block is not detected. Meaning, videos without blocks will be added to history.
+
+# Custom Sources
+- [yout-ube.com](https://yout-ube.com)
+- [nsfwyoutube.com](https://nsfwyoutube.com)
 
 ## Issues?
 If there any issues or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
@@ -42,4 +51,4 @@ If there any issues or you have a suggestion, please feel free to [open an issue
 ## Other Locations
 You can currently find the script in:
 - [GitHub repository](https://github.com/YelloNolo/YouTube-UnBlock/)
-- [Greasy Fork](https://greasyfork.org/en/users/1192501-yellonolo)
+- [Greasy Fork](https://greasyfork.org/en/scripts/477098-youtube-deblock)
