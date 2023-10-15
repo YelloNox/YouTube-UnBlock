@@ -2,14 +2,14 @@
 **Status:** This project is fully functional as of 10/14/2023.
 
 ## Is this blocker getting in the way?
-![indeed an image](/img/YouTube-ad-blocker-experiment.avif)
+![indeed an image](/img/YouTube-ad-blocker-experiment.png)
 
 ## 🩹 Look no further, as here is a bandaid
 The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds an select [Outside Source](#custom-sources) in the place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and reccommendations. There are only a few cons [Found Here](#cons)
 
->Note: I am not the creator of the [Outside Sources](#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
+>Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
 
->This script does not block ads, you will need your own. I reccommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also reccommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
+>This script does not block ads, it only removes the block. I reccommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also reccommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
 
 <br>
 
