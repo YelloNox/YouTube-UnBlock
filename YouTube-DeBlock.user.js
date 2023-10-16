@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            YouTube DeBlock
-// @description     2023 UnBlocker for YouTube. Replaces all videos with unblocked embeds.
+// @description     Fully Working 2023 UnBlocker for YouTube. Replaces all videos with unblocked embeds.
 // @author          YelloNolo
 // @version         1.0.0
 // @created         2023-10-10
@@ -66,7 +66,7 @@
             iframe.width = '100%';
             iframe.height = '100%';
             iframe.src = newURL;
-            iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
             iframe.allowFullscreen = true;
             iframe.zIndex = '9999';
 
