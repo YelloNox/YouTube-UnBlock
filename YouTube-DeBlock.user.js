@@ -32,6 +32,7 @@
     let isBlocked = false;
     let isSubclick = false;
     var updatedURL = window.location.href;
+    var previousDropdownValue;
 
     // Function remove the "ad" from the page. It finds the "ad" by searching for the class name.
     function removeElementsByClassName(removeClass) {
@@ -177,9 +178,17 @@
 
         if (dropdown) {
             dropdown.addEventListener('change', function () {
-                newDomain = domainList[dropdown.value];
-                console.log("Selection Changed: " + newDomain);
-                reloadFrame();
+                var newValue = dropdown.value;
+        
+                // Check if the value has actually changed
+                if (newValue !== previousDropdownValue) {
+                    newDomain = domainList[newValue];
+                    console.log("Selection Changed: " + newDomain);
+                    reloadFrame();
+        
+                    // Update the previousValue variable
+                    previousDropdownValue = newValue;
+                }
             });
         }
     }
