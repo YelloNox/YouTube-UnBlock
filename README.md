@@ -7,7 +7,7 @@
 ## 🩹 Look no further, as here is a bandied
 The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [Outside Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations.
 
->Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
+>Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them. I only redirect all links on "youtube.com".
 
 ## Ad-Blocker Reccommendation 
 This script does not block ads, it only removes the block. I Recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also Recommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
@@ -43,7 +43,7 @@ Cons
 ## Exceptions
 This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
 
-# Custom Sources
+## Custom Sources
 - [yout-ube.com](https://yout-ube.com)
 - [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon
 - Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
