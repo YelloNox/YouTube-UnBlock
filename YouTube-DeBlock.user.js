@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            YouTube DeBlock
-// @description     Semi-working 2023 adblock for YouTube video. Uses "yout-ube.com" and replaces all videos with embeds.
+// @description     2023 UnBlocker for YouTube. Replaces all videos with unblocked embeds.
 // @author          YelloNolo
 // @version         1.0.0
 // @created         2023-10-10
@@ -20,6 +20,7 @@
 
     // Domains to redirect to.
     var domainList = [
+        "youtube.com/embed",
         "yout-ube.com",
         "nsfwyoutube.com"
     ];
@@ -40,28 +41,39 @@
         });
     }
 
+    // If the video is an from specific sites, then the URL needs to be fixed
+    function fixURL(URL) {
+        var updatedURL;
+
+        if (URL.includes("youtube.com")) {
+            URL = URL.replace("watch?v=", "");
+            console.log("Fixed URL: " + URL);
+        }
+        return URL;
+    }
+
     // Create video embedding frame
     let globalFrame;
     function createJFrame(classToOverturn) {
-        const newURL = getNewURL(newDomain);
+        var newURL = getNewURL(newDomain);
         const elements = document.querySelectorAll("." + classToOverturn);
+
+        newURL = fixURL(newURL);
 
         elements.forEach(element => {
             const iframe = document.createElement('iframe');
-            iframe.src = newURL;
             iframe.width = '100%';
             iframe.height = '100%';
+            iframe.src = newURL;
+            iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
             iframe.zIndex = '9999';
-            iframe.allowfullscreen = 'true';
-
-            globalFrame = iframe;
 
             // Replace the existing element with the custom URL
             element.parentNode.replaceChild(iframe, element);
             console.log("Modified URL:", newURL);
         });
     }
-
 
     // Removes the original video frame.
     function removeOgIframe() {
@@ -81,21 +93,6 @@
         removeOgIframe();
         createJFrame(tempReplaceClass);
         console.log("In with the new");
-    }
-
-    // Temp function from testing. It tries to find if the video is unavalible, but is yet to work.
-    function tmp() {
-        const textToFind = "This video is unavailable";
-
-        setTimeout(function () {
-            for (let i = 0; i <= 100; i++) {
-                if (window.includes(textToFind)) {
-                    reloadPage();
-                    console.log("Fetch Error Found... Reloading...");
-                }
-            }
-            console.log("Fetch Pass");
-        }, 3000);
     }
 
     // Function to replace "youtube.com" with "yout-ube.com"
@@ -123,12 +120,6 @@
 
     function reloadPage() {
         location.reload();
-    }
-
-    // Just for testing...
-    function test() {
-        const testNewURL = getNewURL();
-        console.log(testNewURL);
     }
 
     function replaceVideo() {
@@ -258,8 +249,9 @@
     dropdownButton.id = "dropdown";
     dropdownButton.classList.add("btn-style");
     dropdownButton.innerHTML = `
-        <option class="dropdown-content" value="0">YouT-ube</option>
-        <option class="dropdown-content" value="1">NSFW YouTube</option>
+        <option class="dropdown-content" value="0">YouTube Embed</option>
+        <option class="dropdown-content" value="1">YouT-ube</option>
+        <option class="dropdown-content" value="2">NSFW YouTube</option>
     `;
 
     // Add items to Container

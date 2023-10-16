@@ -9,46 +9,47 @@ The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock a
 
 >Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
 
->This script does not block ads, it only removes the block. I reccommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also reccommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
+>This script does not block ads, it only removes the block. I Recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also Recommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
 
 <br>
 
-## Github Install
-1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other userscript manager.
+## GitHub Install
+1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
 2. Open the script: "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)"
-3. Click the "Raw" button at the top right of the page, this should prompt the userscript install page.
+3. Click the "Raw" button at the top right of the page, this should prompt the user script install page.
 
 ## Greasy Fork Install
-1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other userscript manager.
+1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
 2. Click install on the Greasy Fork webpage: [YouTube DeBlock](https://greasyfork.org/en/scripts/477098-youtube-deblock)
 
 
 Pros
 ---
 - No Blockers
+- No Ads
 - Access to:
   - Comments
   - Likes
   - Playlists
   - Recommendations
 - Stays on YouTube
+- Full-Screen (YouTube Embed Only)
+- The YouTube Embed source will track watch history
 
 Cons
 ---
-- Only unblocked videos will be added to YouTube history, with an [exception](#exceptions).
-- Full-Screen Broken
-- The current version has some bugs
+- Minor Bugs (Reload the Frame or Page)
 
 ## Exceptions
-This script will not run if a block is not detected. Meaning, videos without blocks will be added to history.
+This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
 
 # Custom Sources
 - [yout-ube.com](https://yout-ube.com)
 - [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon
-- Reccommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
+- Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
 ## Issues?
-If there are any issues or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
+If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
 
 ## Other Locations
 You can currently find the script in:
