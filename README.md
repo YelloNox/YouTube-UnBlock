@@ -5,13 +5,13 @@
 ![indeed an image](/img/YouTube-ad-blocker-experiment.png)
 
 ## 🩹 Look no further, as here is a bandied
-The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [Outside Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations. There are only a few cons [Found Here](#cons)
+The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [Outside Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations.
 
 >Note: I did not create any of the [Custom Sources](https://github.com/YelloNolo/YouTube-UnBlock/tree/main#custom-sources) nor do I have any affiliations with them, I only redirect all links on "youtube.com".
 
->This script does not block ads, it only removes the block. I Recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also Recommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
+## Ad-Blocker Reccommendation 
+This script does not block ads, it only removes the block. I Recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). I also Recommend [AdGuard](https://www.adguard.com/en/) if you have the resources.
 
-<br>
 
 ## GitHub Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
