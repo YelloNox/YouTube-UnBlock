@@ -42,10 +42,10 @@ Cons
 ## Exceptions
 This script will not run if a block is not detected. Meaning, videos without blocks will be added to history.
 
-# Custom Sources - Fix for NSFW coming soon
+# Custom Sources
 - [yout-ube.com](https://yout-ube.com)
-- [nsfwyoutube.com](https://nsfwyoutube.com)
-- Reccommend Some More to [Issues](/issues/3)
+- [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon
+- Reccommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
 ## Issues?
 If there are any issues or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
