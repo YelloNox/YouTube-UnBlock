@@ -37,11 +37,12 @@ Cons
 ---
 - Only unblocked videos will be added to YouTube history, with an [exception](#exceptions).
 - Full-Screen Broken
+- The current version has some bugs
 
 ## Exceptions
 This script will not run if a block is not detected. Meaning, videos without blocks will be added to history.
 
-# Custom Sources - Comming Soon
+# Custom Sources - Fix for NSFW coming soon
 - [yout-ube.com](https://yout-ube.com)
 - [nsfwyoutube.com](https://nsfwyoutube.com)
 - Reccommend Some More to [Issues](/issues/3)

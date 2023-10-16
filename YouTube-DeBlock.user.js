@@ -1,18 +1,16 @@
 // ==UserScript==
-// @name         YouTube DeBlock
-// @description  Semi-working 2023 adblock for YouTube video. Uses "yout-ube.com" and replaces all videos with embeds.
-// @author       YelloNolo
-// @version      0.9.5
-// @date         2023-10-10
-// @namespace    https://yello.zip
-// @homepage     https://github.com/YelloNolo/YouTube-Adblock
-// @match        *://www.youtube.com/*
-// @grant        none
+// @name            YouTube DeBlock
+// @description     Semi-working 2023 adblock for YouTube video. Uses "yout-ube.com" and replaces all videos with embeds.
+// @author          YelloNolo
+// @version         1.0.0
+// @created         2023-10-10
+// @namespace       https://yello.zip
+// @homepage        https://github.com/YelloNolo/YouTube-Adblock
+// @match           *://www.youtube.com/*
+// @grant           none
 // ==/UserScript==
 
 (function () {
-    // The site that will replace the broken domain
-    const newDomain = "yout-ube.com";
     // Any class the blocker uses to find the message.
     const blockerClass = 'ytd-enforcement-message-view-model';
     // Any class the broken video uses to be replaced.
@@ -20,26 +18,23 @@
     // Video Site
     const youtubeURL = "youtube.com";
 
+    // Domains to redirect to.
+    var domainList = [
+        "yout-ube.com",
+        "nsfwyoutube.com"
+    ];
 
     // --- Do Not Touch --- //
+    var newDomain = domainList[0];
     // Temp Functions //
     const tempReplaceClass = "replaceme";
-    let isBlocked = true;
+    let isBlocked = false;
     let isSubclick = false;
     var updatedURL = window.location.href;
-    // Sets new domain
-    function redirectDomain() {
-        var userChoice = 1;
-        var domainList = [
-            "yout-ube.com",
-            "nsfwyoutube.com"
-        ];
-        return redirectDomain(domainList[userChoice]);
-    }
 
     // Function remove the "ad" from the page. It finds the "ad" by searching for the class name.
-    function removeElementsByClassName() {
-        const elements = document.querySelectorAll('.' + blockerClass);
+    function removeElementsByClassName(removeClass) {
+        const elements = document.querySelectorAll('.' + removeClass);
         elements.forEach(element => {
             element.remove();
         });
@@ -139,7 +134,7 @@
     function replaceVideo() {
         if (!isSubclick) {
             console.log("replacing");
-            removeElementsByClassName();
+            removeElementsByClassName(blockerClass);
             createJFrame(ogVideoClass);
             isSubclick = true;
         } else {
@@ -150,26 +145,30 @@
     }
 
     // Function to run when the button is clicked
-    function forceFix() {
+    function reloadFrame() {
         replaceVideo();
         addDomainToURLs();
 
         console.log("clicked");
-        //test();
     }
 
     // Function that checks if the page is even blocked
     function checkClass() {
-        // Webpage Search for Class(s)
+        const elements = document.querySelectorAll("." + blockerClass);
+        if (elements.length > 0) {
+            isBlocked = true;
+        }
         if (isBlocked) {
             console.log("Replacing Original");
             replaceVideo();
             addDomainToURLs();
         } else {
             urlTracker();
+            dropdownTracker();
         }
     }
 
+    // Checks if the url has changed, if so, reload the iframe (thus reloading the video)
     function urlTracker() {
         var currentURL = window.location.href;
 
@@ -178,28 +177,37 @@
             updatedURL = window.location.href;
 
             isBlocked = true;
-        } else {
-            console.log("checking");
         }
-
     }
 
+    // Checks if the dropdown has changed
+    function dropdownTracker() {
+        var dropdown = document.getElementById("dropdown");
+
+        if (dropdown) {
+            dropdown.addEventListener('change', function () {
+                newDomain = domainList[dropdown.value];
+                console.log("Selection Changed: " + newDomain);
+                reloadFrame();
+            });
+        }
+    }
+
+    // Save button to local storage
+    function dropdownStore() {
+        rememberButton.addEventListener('click', function () {
+            localStorage.setItem('selectedOption', dropdown.value);
+            console.log("Selection Stored");
+        });
+    }
+
+    // Custom CSS
     var css = `
-    .custom-btn:hover {
-        transform: scale(0.95);
-    }
-    .custom-btn:active {
-        transform: scale(0.8);
-        border: none !important;
-
-        transition: transform 0.1s ease;
-    }
-    .custom-btn {
+    .btn-style {
         position: relative;
-        displaty: inline-block;
+        display: inline-block;
         padding: 9px;
-        margin-right: 16px;
-        margin-left: 16px;
+        height: 40px;
         color: white;
         background-color: transparent;
         box-shadow: none;
@@ -207,29 +215,71 @@
         border: 1px solid white;
         border-radius: 0px;
         z-index: 9999;
-
+        opacity: 100%;
         transition: transform 0.3s ease;
+        user-select: none;
+    }
+    .btn-style:hover {
+        opacity: 80%;
+    }
+    .main-btn {
+        margin-right: 16px;
+        transition: transform 0.1s ease;
+    }
+    .main-btn:active {
+        border: 1px solid transparent !important;
+        transform: scale(0.9);
+    }
+    .dropdown-content {
+        position: relative;
+        background-color: black;
+    }
+    .custom-container {
+        border: none;
+        display: inline-block;
+        margin-right: 16px;
+        margin-left: 16px;
+        transition: transform 0.3s ease;
+
     }
     `;
 
-    // Add custom css to page
-    var style = document.createElement("style");
-    style.appendChild(document.createTextNode(css));
-
-    document.head.appendChild(style);
+    // Create Container
+    var customContainer = document.createElement("div");
+    customContainer.classList.add("custom-container");
 
     // Create Button
-    const button = document.createElement('button');
-    button.textContent = 'Reload Frame';
-    button.id.add = "button";
-    button.classList.add("custom-btn");
+    var reloadButton = document.createElement('button');
+    reloadButton.textContent = 'Reload Frame';
+    reloadButton.classList.add("btn-style", "main-btn");
 
-    // Add button to page
+    // Create Dropdown Menu
+    var dropdownButton = document.createElement("select");
+    dropdownButton.id = "dropdown";
+    dropdownButton.classList.add("btn-style");
+    dropdownButton.innerHTML = `
+        <option class="dropdown-content" value="0">YouT-ube</option>
+        <option class="dropdown-content" value="1">NSFW YouTube</option>
+    `;
+
+    // Add items to Container
+    customContainer.appendChild(reloadButton);
+    customContainer.appendChild(dropdownButton);
+
+    // Append CSS to page
+    var style = document.createElement("style");
+    style.appendChild(document.createTextNode(css));
+    document.head.appendChild(style);
+
+    // Find ID Location
     var exsistingParent = document.getElementById("end");
-    exsistingParent.insertBefore(button, exsistingParent.firstChild);
+
+    // Add Container to Page
+    var exsistingParent = document.getElementById("end");
+    exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
 
     // Listen
-    button.addEventListener('click', forceFix);
+    reloadButton.addEventListener('click', reloadFrame);
 
     // Run every second to check for updates on page
     // Will not ping any server till a new page is clicked
