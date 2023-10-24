@@ -11,11 +11,12 @@
 // ==/UserScript==
 
 (function () {
-    // Any class the blocker uses to find the message.
+    // Any class the blocker uses
     const blockerClass = 'ytd-enforcement-message-view-model';
-    // Any class the broken video uses to be replaced.
-    const ogVideoClass = 'yt-playability-error-supported-renderers';
-    // Video Site
+    // Any class on the broken video
+    //  yt-playability-error-supported-renderers
+    const ogVideoClass = 'video-stream html5-main-video';
+    // Original Youtube URL
     const youtubeURL = "youtube.com";
 
     // Domains to redirect to.
@@ -33,8 +34,75 @@
     let isSubclick = false;
     var updatedURL = window.location.href;
     var previousDropdownValue;
+    // --- Do Not Touch --- //
 
-    // Function remove the "ad" from the page. It finds the "ad" by searching for the class name.
+
+    // -------------- Main Loop Funcitons -------------- //
+
+    // Function that checks if the page is even blocked
+    function checkClass() {
+        const elements = document.querySelectorAll("." + blockerClass);
+        if (elements.length > 0) {
+            isBlocked = true;
+        }
+
+        if (isBlocked) {
+            console.log("Replacing Original");
+            replaceVideo();
+            addDomainToURLs();
+        } else {
+            urlTracker();
+            dropdownTracker();
+        }
+    }
+
+    // -------------- Event Listeners -------------- //
+
+    // Checks if the url has changed, if so, reload the iframe (thus reloading the video)
+    function urlTracker() {
+        var currentURL = window.location.href;
+
+        if (currentURL != updatedURL) {
+            console.log("Found New URL");
+            updatedURL = window.location.href;
+            if (isSubclick) {
+                isBlocked = true;
+            }
+        }
+    }
+
+    // Checks if the dropdown has changed
+    function dropdownTracker() {
+        var dropdown = document.getElementById("dropdown");
+
+        if (dropdown) {
+            dropdown.addEventListener('change', function () {
+                var newValue = dropdown.value;
+
+                // Check if the value has actually changed
+                if (newValue !== previousDropdownValue) {
+                    newDomain = domainList[newValue];
+                    console.log("Selection Changed: " + newDomain);
+                    reloadFrame();
+
+                    // Update the previousValue variable
+                    previousDropdownValue = newValue;
+                }
+            });
+        }
+    }
+
+    // Reload Frame when "Reload Frame" button is clicked
+    function reloadFrame() {
+        replaceVideo();
+        addDomainToURLs();
+
+        console.log("clicked");
+    }
+
+    // -------------- Actions -------------- //
+
+    // Remove the *blocker* from the page by locating the class name.
     function removeElementsByClassName(removeClass) {
         const elements = document.querySelectorAll('.' + removeClass);
         elements.forEach(element => {
@@ -42,51 +110,24 @@
         });
     }
 
-    // If the video is an from specific sites, then the URL needs to be fixed
+    // Edits the URL to include "watch?v="
     function fixURL(URL) {
-        var updatedURL;
+        const isURL = checkText(URL, youtubeURL);
+        const notPlaylist = !checkText(URL, "&list=");
+        
+        console.log("isURL:" + isURL + " and notPlaylist:" + notPlaylist);
+        console.log("URL:" + URL);
 
-        if (URL.includes("youtube.com")) {
+        if (isURL && notPlaylist) {
             URL = URL.replace("watch?v=", "");
             console.log("Fixed URL: " + URL);
         }
         return URL;
     }
 
-    // Create video embedding frame
-    let globalFrame;
-    function createJFrame(classToOverturn) {
-        var newURL = getNewURL(newDomain);
-        const elements = document.querySelectorAll("." + classToOverturn);
-
-        newURL = fixURL(newURL);
-
-        elements.forEach(element => {
-            const iframe = document.createElement('iframe');
-            iframe.width = '100%';
-            iframe.height = '100%';
-            iframe.src = newURL;
-            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-            iframe.allowFullscreen = true;
-            iframe.zIndex = '9999';
-
-            // Replace the existing element with the custom URL
-            element.parentNode.replaceChild(iframe, element);
-            console.log("Modified URL:", newURL);
-        });
-    }
-
-    // Removes the original video frame.
-    function removeOgIframe() {
-        const iframes = document.querySelectorAll('iframe');
-        console.log("beginning the removal");
-        iframes.forEach(iframe => {
-            const paragraph = document.createElement('p');
-            paragraph.className = tempReplaceClass;
-            iframe.parentNode.insertBefore(paragraph, iframe);
-            iframe.remove();
-            console.log("Out with the old");
-        });
+    // Checks string and returns if contains matching text
+    function checkText(string, text) {
+        return string.includes(text);
     }
 
     // Embeds the new video into the page
@@ -96,7 +137,7 @@
         console.log("In with the new");
     }
 
-    // Function to replace "youtube.com" with "yout-ube.com"
+    // Function to replace "youtube.com" with selected domain
     function getNewURL(newDomain) {
         const currentURL = window.location.href;
         if (currentURL.includes(youtubeURL)) {
@@ -119,87 +160,72 @@
         });
     }
 
-    function reloadPage() {
-        location.reload();
-    }
-
     function replaceVideo() {
         if (!isSubclick) {
             console.log("replacing");
             removeElementsByClassName(blockerClass);
             createJFrame(ogVideoClass);
             isSubclick = true;
-        } else {
+
+            return;
+        }
+        if (isSubclick) {
             console.log("replacing subclick");
             updateVideoToNewFrame(tempReplaceClass, newDomain);
         }
+
         isBlocked = false;
     }
 
-    // Function to run when the button is clicked
-    function reloadFrame() {
-        replaceVideo();
-        addDomainToURLs();
+    // -------------- JFrame Control -------------- //
+    // Create video embedding frame
+    function createJFrame(classToOverturn) {
+        var newURL = getNewURL(newDomain);
+        const elements = document.querySelectorAll("." + classToOverturn);
+        console.log("newURL Beginning [createJFrame]: " + newURL);
 
-        console.log("clicked");
+        newURL = fixURL(newURL);
+
+        elements.forEach(element => {
+            const iframe = document.createElement('iframe');
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.src = newURL;
+            iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            // autoplay                   ^ (removed from bug; fixing currently)
+            iframe.allowFullscreen = true;
+            iframe.zIndex = '9999';
+
+            // Replace the existing element with the custom URL
+            element.parentNode.replaceChild(iframe, element);
+            console.log("Modified URL:", newURL);
+        });
     }
 
-    // Function that checks if the page is even blocked
-    function checkClass() {
-        const elements = document.querySelectorAll("." + blockerClass);
-        if (elements.length > 0) {
-            isBlocked = true;
-        }
-        if (isBlocked) {
-            console.log("Replacing Original");
-            replaceVideo();
-            addDomainToURLs();
-        } else {
-            urlTracker();
-            dropdownTracker();
-        }
+    // Removes the original video frame.
+    function removeOgIframe() {
+        const iframes = document.querySelectorAll('iframe');
+        console.log("beginning the removal");
+        iframes.forEach(iframe => {
+            const paragraph = document.createElement('p');
+            paragraph.className = tempReplaceClass;
+            iframe.parentNode.insertBefore(paragraph, iframe);
+            iframe.remove();
+            console.log("Out with the old");
+        });
     }
 
-    // Checks if the url has changed, if so, reload the iframe (thus reloading the video)
-    function urlTracker() {
-        var currentURL = window.location.href;
+    // -------------- Experimental Features (unused) -------------- //
 
-        if (currentURL != updatedURL) {
-            console.log("Found New URL");
-            updatedURL = window.location.href;
-
-            isBlocked = true;
-        }
-    }
-
-    // Checks if the dropdown has changed
-    function dropdownTracker() {
-        var dropdown = document.getElementById("dropdown");
-
-        if (dropdown) {
-            dropdown.addEventListener('change', function () {
-                var newValue = dropdown.value;
-        
-                // Check if the value has actually changed
-                if (newValue !== previousDropdownValue) {
-                    newDomain = domainList[newValue];
-                    console.log("Selection Changed: " + newDomain);
-                    reloadFrame();
-        
-                    // Update the previousValue variable
-                    previousDropdownValue = newValue;
-                }
-            });
-        }
-    }
-
-    // Save button to local storage
+    // Save dropdown selection to local storage
     function dropdownStore() {
         rememberButton.addEventListener('click', function () {
             localStorage.setItem('selectedOption', dropdown.value);
             console.log("Selection Stored");
         });
     }
+
+    // -------------- Custom HTML Start -------------- //
 
     // Custom CSS
     var css = `
@@ -263,6 +289,10 @@
         <option class="dropdown-content" value="2">NSFW YouTube</option>
     `;
 
+    // -------------- Custom HTML End -------------- //
+
+    // ----- Appending custom content to page ----- //
+
     // Add items to Container
     customContainer.appendChild(reloadButton);
     customContainer.appendChild(dropdownButton);
@@ -279,11 +309,12 @@
     var exsistingParent = document.getElementById("end");
     exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
 
-    // Listen
+    // -------------- Active Listeners -------------- //
+
+    // Listen for reload BTN click
     reloadButton.addEventListener('click', reloadFrame);
 
-    // Run every second to check for updates on page
-    // Will not ping any server till a new page is clicked
+    // Run every second to check for updates on page (Will not ping any server till a new page is clicked)
     const classCheckInterval = setInterval(checkClass, 1000);
     document.addEventListener('click', checkClass, 1000);
 
