@@ -1,5 +1,5 @@
 # YouTube UnBlock
-**Status:** This project is fully functional as of 10/16/2023.
+**Status:** This project is fully functional as of 10/24/2023. (some bugs here and there)
 
 ## Is this blocker getting in the way?
 ![indeed an image](/img/YouTube-ad-blocker-experiment.png)
