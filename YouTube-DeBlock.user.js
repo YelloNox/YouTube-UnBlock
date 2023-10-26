@@ -15,7 +15,7 @@
     const blockerClass = 'ytd-enforcement-message-view-model';
     // Any class on the broken video
     //  yt-playability-error-supported-renderers
-    const ogVideoClass = 'video-stream html5-main-video';
+    const ogVideoClass = 'yt-playability-error-supported-renderers';
     // Original Youtube URL
     const youtubeURL = "youtube.com";
 
@@ -110,21 +110,6 @@
         });
     }
 
-    // Edits the URL to include "watch?v="
-    function fixURL(URL) {
-        const isURL = checkText(URL, youtubeURL);
-        const notPlaylist = !checkText(URL, "&list=");
-        
-        console.log("isURL:" + isURL + " and notPlaylist:" + notPlaylist);
-        console.log("URL:" + URL);
-
-        if (isURL && notPlaylist) {
-            URL = URL.replace("watch?v=", "");
-            console.log("Fixed URL: " + URL);
-        }
-        return URL;
-    }
-
     // Checks string and returns if contains matching text
     function checkText(string, text) {
         return string.includes(text);
@@ -175,6 +160,21 @@
         }
 
         isBlocked = false;
+    }
+
+    // Edits the URL to include "watch?v="
+    function fixURL(URL) {
+        const isURL = checkText(URL, youtubeURL);
+        const notPlaylist = !checkText(URL, "&list=");
+
+        console.log("isURL:" + isURL + " and notPlaylist:" + notPlaylist);
+        console.log("URL [fixURL]:" + URL);
+
+        if (isURL && notPlaylist) {
+            URL = URL.replace("watch?v=", "");
+            console.log("Fixed URL: " + URL);
+        }
+        return URL;
     }
 
     // -------------- JFrame Control -------------- //
