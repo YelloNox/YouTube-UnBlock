@@ -285,8 +285,8 @@
     dropdownButton.classList.add("btn-style");
     dropdownButton.innerHTML = `
         <option class="dropdown-content" value="0">YouTube Embed</option>
-        <option class="dropdown-content" value="1">YouT-ube</option>
-        <option class="dropdown-content" value="2">NSFW YouTube</option>
+        <option class="dropdown-content" value="1">YouT-ube [Broke(ish)]</option>
+        Broke <option class="dropdown-content" value="2">NSFW YouTube [Broke(ish)]</option>
     `;
 
     // -------------- Custom HTML End -------------- //
