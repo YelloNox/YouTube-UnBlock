@@ -51,7 +51,8 @@ This script will not run if a block is not detected. If no block appears, YouTub
 
 ## Plans?
 - [ ] Add multi-language support (aka, translations with google translate)
-- [ ] Fix Bug: Frame loads multiple times!
+- [ ] Fix Bug: Frame loads multiple times! Add the check to each runtime. 
+- [ ] Add separate check before code runs. 
 
 ## Issues?
 If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
