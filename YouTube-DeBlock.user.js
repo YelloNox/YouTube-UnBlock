@@ -31,7 +31,8 @@
     // Temp Functions //
     const tempReplaceClass = "replaceme";
     let isBlocked = false;
-    let isSubclick = false;
+    let isSubChange = false;
+    let isChangingFrame = false;
     var updatedURL = window.location.href;
     var previousDropdownValue;
     // --- Do Not Touch --- //
@@ -50,6 +51,7 @@
             console.log("Replacing Original");
             replaceVideo();
             addDomainToURLs();
+            isBlocked = false;
         } else {
             urlTracker();
             dropdownTracker();
@@ -65,7 +67,7 @@
         if (currentURL != updatedURL) {
             console.log("Found New URL");
             updatedURL = window.location.href;
-            if (isSubclick) {
+            if (isSubChange) {
                 isBlocked = true;
             }
         }
@@ -100,6 +102,21 @@
         console.log("clicked");
     }
 
+    // -------------- Checks -------------- //
+
+    function appendingFrame(isSet) {
+        if (isSet == true) {
+            isChangingFrame = true;
+        } else {
+            isChangingFrame = false;
+        }
+        console.log("ChangingFrames: " + changingFrame)
+    }
+
+    function restRead() {
+
+    }
+
     // -------------- Actions -------------- //
 
     // Remove the *blocker* from the page by locating the class name.
@@ -113,13 +130,6 @@
     // Checks string and returns if contains matching text
     function checkText(string, text) {
         return string.includes(text);
-    }
-
-    // Embeds the new video into the page
-    function updateVideoToNewFrame() {
-        removeOgIframe();
-        createJFrame(tempReplaceClass);
-        console.log("In with the new");
     }
 
     // Function to replace "youtube.com" with selected domain
@@ -145,18 +155,21 @@
         });
     }
 
+    // Is it the first video change, or recurring?
     function replaceVideo() {
-        if (!isSubclick) {
+        if (!isSubChange) {
             console.log("replacing");
             removeElementsByClassName(blockerClass);
             createJFrame(ogVideoClass);
-            isSubclick = true;
+            isSubChange = true;
 
             return;
         }
-        if (isSubclick) {
+        if (isSubChange) {
             console.log("replacing subclick");
-            updateVideoToNewFrame(tempReplaceClass, newDomain);
+            removeOgIframe();
+            createJFrame(tempReplaceClass);
+            console.log("In with the new");
         }
 
         isBlocked = false;
@@ -165,12 +178,12 @@
     // Edits the URL to include "watch?v="
     function fixURL(URL) {
         const isURL = checkText(URL, youtubeURL);
-        const notPlaylist = !checkText(URL, "&list=");
+        const isPlaylist = checkText(URL, "&list=");
 
-        console.log("isURL:" + isURL + " and notPlaylist:" + notPlaylist);
+        console.log("isURL:" + isURL + " and isPlaylist:" + isPlaylist);
         console.log("URL [fixURL]:" + URL);
 
-        if (isURL && notPlaylist) {
+        if (isURL && !isPlaylist) {
             URL = URL.replace("watch?v=", "");
             console.log("Fixed URL: " + URL);
         }
@@ -205,7 +218,7 @@
     // Removes the original video frame.
     function removeOgIframe() {
         const iframes = document.querySelectorAll('iframe');
-        console.log("beginning the removal");
+        console.log("removing jFrame");
         iframes.forEach(iframe => {
             const paragraph = document.createElement('p');
             paragraph.className = tempReplaceClass;
