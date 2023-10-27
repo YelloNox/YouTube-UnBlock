@@ -3,7 +3,11 @@
 **Status:** This project is fully functional as of 10/27/2023. (bugs bugs bugs. Can't catch-em-all)
 
 ## Is this blocker getting in the way? 
-![a rat](/img/YouTube-ad-blocker-not-experiment.png)
+![a rat](/img/YouTube-ad-blocker-not-experiment-dark.png)
+<picture>
+  <source  alt="a light RAT." media="(prefers-color-scheme: dark)" srcset="/img/YouTube-ad-blocker-not-experiment-dark.png">
+  <source  alt="a dark RAT." media="(prefers-color-scheme: light)" srcset="/img/YouTube-ad-blocker-not-experiment.png">
+</picture>
 
 ## 🩹 Look no further, as here is a bandied
 The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [other Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations.
