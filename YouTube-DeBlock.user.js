@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Replaces all videos with unblocked embeds.
 // @author          YelloNolo
-// @version         1.0.2
+// @version         1.0.3
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -205,7 +205,7 @@
             iframe.height = '100%';
             iframe.src = newURL;
             iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-            // autoplay                   ^ (removed from bug; fixing currently)
+            // autoplay                   ^ (autoplay removed after bug; also never worked anyhow)
             iframe.allowFullscreen = true;
             iframe.zIndex = '9999';
 
@@ -298,8 +298,8 @@
     dropdownButton.classList.add("btn-style");
     dropdownButton.innerHTML = `
         <option class="dropdown-content" value="0">YouTube Embed</option>
-        <option class="dropdown-content" value="1">YouT-ube [Broke(ish)]</option>
-        Broke <option class="dropdown-content" value="2">NSFW YouTube [Broke(ish)]</option>
+        <option class="dropdown-content" value="1">YouT-ube [Fixed?]</option>
+        Broke <option class="dropdown-content" value="2">NSFW YouTube [Broken!]</option>
     `;
 
     // -------------- Custom HTML End -------------- //

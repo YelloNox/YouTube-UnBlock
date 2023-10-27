@@ -31,7 +31,6 @@ Pros
 - Access to:
   - Comments
   - Likes
-  - Playlists
   - Recommendations
 - Stays on YouTube
 - Full-Screen (YouTube Embed Only)
@@ -40,19 +39,20 @@ Pros
 Cons
 ---
 - Some Bugs
+- Playlists are broken (currently)
 
 ## Exceptions
 This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
 
 ## Custom Sources
-- [yout-ube.com](https://yout-ube.com)
+- [yout-ube.com](https://yout-ube.com) - Should be fixed
 - [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon
 - Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
 ## Plans?
 - [ ] Add multi-language support (aka, translations with google translate)
 - [ ] Fix Bug: Frame loads multiple times! Add the check to each runtime. 
-- [ ] Add separate check before code runs. 
+- [ ] So... Playlists are broken :O. Youtube thinks the videos fail to load, then skips them, repeatedly, forever...
 
 ## Issues?
 If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
