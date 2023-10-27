@@ -179,13 +179,18 @@
     function fixURL(URL) {
         const isURL = checkText(URL, youtubeURL);
         const isPlaylist = checkText(URL, "&list=");
+        const isTimestamp = checkText(URL, "&t=");
 
-        console.log("isURL:" + isURL + " and isPlaylist:" + isPlaylist);
+        console.log("isURL:" + isURL + " isPlaylist:" + isPlaylist + " isTimestamp:" + isTimestamp);
         console.log("URL [fixURL]:" + URL);
 
         if (isURL && !isPlaylist) {
             URL = URL.replace("watch?v=", "");
-            console.log("Fixed URL: " + URL);
+            console.log("Is Playlist [fixURL]: " + URL);
+        }
+        if (isURL && isTimestamp){
+            URL = URL.split("&t=")[0];
+            console.log("URL Split [fixURL]: " + URL);
         }
         return URL;
     }

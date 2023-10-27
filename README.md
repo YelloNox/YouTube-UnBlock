@@ -42,6 +42,7 @@ Cons
 ---
 - Some Bugs
 - Playlists are broken (currently)
+- Timestamps do not work. The video reverts to the beginning.
 
 ## Exceptions
 This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
@@ -66,4 +67,4 @@ You can currently find the script in:
 
 ---
 
-<p style="font-size:4px;">Making YouTube Great Again<sup>TIM</sup></p>
+Making YouTube Great Again<sup>TIM</sup>
