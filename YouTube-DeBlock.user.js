@@ -48,11 +48,12 @@
         }
 
         if (isBlocked) {
-            console.log("Replacing Original");
+            console.log("Replacing Original [checkClass]");
             replaceVideo();
             addDomainToURLs();
             isBlocked = false;
         } else {
+            // console.log("[checkClass] #2") - Cogs Log
             urlTracker();
             dropdownTracker();
         }
@@ -63,7 +64,7 @@
     // Checks if the url has changed, if so, reload the iframe (thus reloading the video)
     function urlTracker() {
         var currentURL = window.location.href;
-
+        // console.log("Test URL [urlTracker]"); - Cogs Log
         if (currentURL != updatedURL) {
             console.log("Found New URL");
             updatedURL = window.location.href;
@@ -114,13 +115,14 @@
     }
 
     function restRead() {
-
+        null;
     }
 
     // -------------- Actions -------------- //
 
     // Remove the *blocker* from the page by locating the class name.
     function removeElementsByClassName(removeClass) {
+        console.log("Removing [removeElementsByClassName]" + removeClass);
         const elements = document.querySelectorAll('.' + removeClass);
         elements.forEach(element => {
             element.remove();
@@ -129,6 +131,7 @@
 
     // Checks string and returns if contains matching text
     function checkText(string, text) {
+        console.log("Checking string [checkText]")
         return string.includes(text);
     }
 
@@ -327,7 +330,7 @@
     var exsistingParent = document.getElementById("end");
     exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
 
-    // -------------- Active Listeners -------------- //
+     // -------------- Active Listeners -------------- //
 
     // Listen for reload BTN click
     reloadButton.addEventListener('click', reloadFrame);
