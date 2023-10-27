@@ -122,7 +122,7 @@
 
     // Remove the *blocker* from the page by locating the class name.
     function removeElementsByClassName(removeClass) {
-        console.log("Removing [removeElementsByClassName]" + removeClass);
+        console.log("Removing [removeElementsByClassName]: " + removeClass);
         const elements = document.querySelectorAll('.' + removeClass);
         elements.forEach(element => {
             element.remove();
@@ -137,6 +137,7 @@
 
     // Function to replace "youtube.com" with selected domain
     function getNewURL(newDomain) {
+        console.log("New URL [newDomain]: " + newDomain);
         const currentURL = window.location.href;
         if (currentURL.includes(youtubeURL)) {
             const newURL = currentURL.replace(youtubeURL, newDomain);
@@ -146,6 +147,7 @@
 
     // Adds "youtube.com" to all nameless urls on webpage
     function addDomainToURLs() {
+        console.log("Adding [addDomainToURLs]");
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
@@ -161,7 +163,7 @@
     // Is it the first video change, or recurring?
     function replaceVideo() {
         if (!isSubChange) {
-            console.log("replacing");
+            console.log("replacing [replaceVideo]");
             removeElementsByClassName(blockerClass);
             createJFrame(ogVideoClass);
             isSubChange = true;
@@ -169,10 +171,10 @@
             return;
         }
         if (isSubChange) {
-            console.log("replacing subclick");
+            console.log("replacing subclick [replaceVideo]");
             removeOgIframe();
             createJFrame(tempReplaceClass);
-            console.log("In with the new");
+            console.log("In with the new [replaceVideo]");
         }
 
         isBlocked = false;
@@ -226,13 +228,13 @@
     // Removes the original video frame.
     function removeOgIframe() {
         const iframes = document.querySelectorAll('iframe');
-        console.log("removing jFrame");
+        console.log("removing jFrame [removeOgIframe]");
         iframes.forEach(iframe => {
             const paragraph = document.createElement('p');
             paragraph.className = tempReplaceClass;
             iframe.parentNode.insertBefore(paragraph, iframe);
             iframe.remove();
-            console.log("Out with the old");
+            console.log("Out with the old [removeOgIframe]");
         });
     }
 
