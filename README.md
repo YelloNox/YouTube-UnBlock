@@ -2,7 +2,7 @@
 
 **Status:** This project is fully functional as of 10/27/2023. (bugs bugs bugs. Can't catch-em-all)
 
-## Is this blocker getting in the way?
+## Is this blocker getting in the way? 
 ![a rat](/img/YouTube-ad-blocker-not-experiment.png)
 
 ## 🩹 Look no further, as here is a bandied
@@ -10,23 +10,23 @@ The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock a
 
 >Note: I did not create any of the [Custom Sources](#custom-sources) nor do I have any affiliations with them. I only redirect all links on "youtube.com".
 
-## Ad-Blocker Recommendation  
+## 🚫 Ad-Blocker Recommendation  
 This script does not block ads, it only removes the block. I recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). 
 
 >If you have the resources, I highly recommend [AdGuard](https://www.adguard.com/en/)!
 
 
-## GitHub Install
+## 📂 GitHub Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
 2. Open the script: "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)"
 3. Click the "Raw" button at the top right of the page, this should prompt the user script install page.
 
-## Greasy Fork Install
+## 🍴 Greasy Fork Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
 2. Click install on the Greasy Fork webpage: [YouTube DeBlock](https://greasyfork.org/en/scripts/477098-youtube-deblock)
 
 
-Pros
+✅ Pros
 ---
 - No Blockers
 - No Ads
@@ -38,27 +38,27 @@ Pros
 - Full-Screen (YouTube Embed Only)
 - Track Watch History (YouTube Embed Only)
 
-Cons
+❌ Cons
 ---
 - Some Bugs
 - Playlists are broken (currently)
 - Timestamps do not work. The video reverts to the beginning.
 
-## Exceptions
+## 🥫 Exceptions
 This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
 
-## Custom Sources
+## 🏠 Custom Sources
 - [yout-ube.com](https://yout-ube.com) - Should be fixed
 - [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon (whenever soon is)
 - Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
-## Plans?
+## ✈️ Plans?
 - [ ] Add multi-language support (aka, translations with google translate)
 - [ ] Fix Bug: Frame loads multiple times! Add the check to each runtime. 
 - [ ] So... Playlists are broken :O. Youtube thinks the videos fail to load, then skips them, repeatedly, forever...
 - [ ] Setting saved to local storage (for language implementation mostly)
 
-## Issues?
+## 💔 Issues?
 If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
 
 ## Other Locations
