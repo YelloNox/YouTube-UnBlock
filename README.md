@@ -15,7 +15,6 @@ This script does not block ads, it only removes the block. I recommend [uBlock O
 
 >If you have the resources, I highly recommend [AdGuard](https://www.adguard.com/en/)!
 
-
 ## 📂 GitHub Install
 1. Install [Tampermonkey](https://www.tampermonkey.net/), [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or any other user script manager.
 2. Open the script: "[YouTube-DeBlock.user.js](/YouTube-DeBlock.user.js)"
@@ -45,7 +44,7 @@ This script does not block ads, it only removes the block. I recommend [uBlock O
 - Timestamps do not work. The video reverts to the beginning.
 
 ## 🥫 Exceptions
-This script will not run if a block is not detected. If no block appears, YouTube continues as normal.
+This script will not run if a block is not detected. Meaning, if the script does not find a block, none of the script functions will do anything.
 
 ## 🏠 Custom Sources
 - [yout-ube.com](https://yout-ube.com) - Should be fixed
