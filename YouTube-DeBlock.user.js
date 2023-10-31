@@ -45,6 +45,7 @@
         const elements = document.querySelectorAll("." + blockerClass);
         if (elements.length > 0) {
             isBlocked = true;
+            console.log("blocked [checkClass]: yes");
         }
 
         if (isBlocked) {
@@ -191,13 +192,30 @@
 
         if (isURL && !isPlaylist) {
             URL = URL.replace("watch?v=", "");
-            console.log("Is Playlist [fixURL]: " + URL);
+            console.log("Is Not Playlist [fixURL]: " + URL);
         }
         if (isURL && isTimestamp){
             URL = URL.split("&t=")[0];
             console.log("URL Split [fixURL]: " + URL);
         }
         return URL;
+    }
+
+    var theaterMode = false;
+    function toggleTheater(){
+        if (theaterMode) {
+            collection = document.getElementsByTagName('ytd-watch-flexy');
+            ytd_watch_flexy = collection.item(0);
+            ytd_watch_flexy.theater = true;
+            console.log("Theater On");
+            theaterMode = false;
+        } else {
+            collection = document.getElementsByTagName('ytd-watch-flexy');
+            ytd_watch_flexy = collection.item(0);
+            ytd_watch_flexy.theater = false;
+            console.log("Theater Off");
+            theaterMode = true;
+        }
     }
 
     // -------------- JFrame Control -------------- //
@@ -297,7 +315,12 @@
     var customContainer = document.createElement("div");
     customContainer.classList.add("custom-container");
 
-    // Create Button
+    // Create Button Theater Mode
+    var theaterButton = document.createElement('button');
+    theaterButton.textContent = 'Theater';
+    theaterButton.classList.add("btn-style", "main-btn");
+
+    // Create Button Reload
     var reloadButton = document.createElement('button');
     reloadButton.textContent = 'Reload Frame';
     reloadButton.classList.add("btn-style", "main-btn");
@@ -317,6 +340,7 @@
     // ----- Appending custom content to page ----- //
 
     // Add items to Container
+    customContainer.appendChild(theaterButton);
     customContainer.appendChild(reloadButton);
     customContainer.appendChild(dropdownButton);
 
@@ -335,6 +359,7 @@
      // -------------- Active Listeners -------------- //
 
     // Listen for reload BTN click
+    theaterButton.addEventListener('click', toggleTheater);
     reloadButton.addEventListener('click', reloadFrame);
 
     // Run every second to check for updates on page (Will not ping any server till a new page is clicked)
