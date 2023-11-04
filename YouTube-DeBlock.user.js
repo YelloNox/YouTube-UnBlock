@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.0.4
+// @version         1.0.5
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -18,6 +18,8 @@
     const ogVideoClass = 'yt-playability-error-supported-renderers';
     // Original Youtube URL
     const youtubeURL = "youtube.com";
+    // Change to theater mode on load
+    const changeTheaterOnStart = true;
 
     // Domains to redirect to.
     var domainList = [
@@ -43,8 +45,11 @@
     // Function that checks if the page is even blocked
     function checkClass() {
         const elements = document.querySelectorAll("." + blockerClass);
+        var runOnce = false;
+
         if (elements.length > 0) {
             isBlocked = true;
+            console.log("blocked [checkClass]: yes");
         }
 
         if (isBlocked) {
@@ -56,6 +61,11 @@
             // console.log("[checkClass] #2") - Cogs Log
             urlTracker();
             dropdownTracker();
+        }
+
+        if (changeTheaterMode && !runOnce) {
+            changeTheaterMode(true)
+            runOnce = true;
         }
     }
 
@@ -191,13 +201,39 @@
 
         if (isURL && !isPlaylist) {
             URL = URL.replace("watch?v=", "");
-            console.log("Is Playlist [fixURL]: " + URL);
+            console.log("Is Not Playlist [fixURL]: " + URL);
         }
         if (isURL && isTimestamp){
             URL = URL.split("&t=")[0];
             console.log("URL Split [fixURL]: " + URL);
         }
         return URL;
+    }
+
+    var theaterMode = true;
+    function toggleTheater(){
+        if (theaterMode) {
+            console.log("Changing Mode [toggleTheater]: Off");
+            theaterMode = false;
+        } else {
+            console.log("Changing Mode [toggleTheater]: On");
+            theaterMode = true;
+        }
+        changeTheaterMode(theaterMode)
+    }
+
+    function changeTheaterMode(state) {
+        if (state) {
+            collection = document.getElementsByTagName('ytd-watch-flexy');
+            ytd_watch_flexy = collection.item(0);
+            ytd_watch_flexy.theater = true;
+            console.log("Theater On [changeTheaterMode]");
+        } else {
+            collection = document.getElementsByTagName('ytd-watch-flexy');
+            ytd_watch_flexy = collection.item(0);
+            ytd_watch_flexy.theater = false;
+            console.log("Theater Off [changeTheaterMode]");
+        }
     }
 
     // -------------- JFrame Control -------------- //
@@ -296,8 +332,13 @@
     // Create Container
     var customContainer = document.createElement("div");
     customContainer.classList.add("custom-container");
-
-    // Create Button
+/* Not Complete
+    // Create Button Theater Mode
+    var theaterButton = document.createElement('button');
+    theaterButton.textContent = 'Theater';
+    theaterButton.classList.add("btn-style", "main-btn");
+*/
+    // Create Button Reload
     var reloadButton = document.createElement('button');
     reloadButton.textContent = 'Reload Frame';
     reloadButton.classList.add("btn-style", "main-btn");
@@ -317,6 +358,8 @@
     // ----- Appending custom content to page ----- //
 
     // Add items to Container
+    
+    // Coming Soon: customContainer.appendChild(theaterButton);
     customContainer.appendChild(reloadButton);
     customContainer.appendChild(dropdownButton);
 
@@ -334,8 +377,9 @@
 
      // -------------- Active Listeners -------------- //
 
-    // Listen for reload BTN click
-    reloadButton.addEventListener('click', reloadFrame);
+    // Listen for reload BTN click (SOON)
+    // theaterButton.addEventListener('click', toggleTheater);
+    // reloadButton.addEventListener('click', reloadFrame);
 
     // Run every second to check for updates on page (Will not ping any server till a new page is clicked)
     const classCheckInterval = setInterval(checkClass, 1000);
