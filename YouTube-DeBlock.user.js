@@ -43,9 +43,9 @@
     // -------------- Main Loop Funcitons -------------- //
 
     // Function that checks if the page is even blocked
+    var runOnce = false;
     function checkClass() {
         const elements = document.querySelectorAll("." + blockerClass);
-        var runOnce = false;
 
         if (elements.length > 0) {
             isBlocked = true;
