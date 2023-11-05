@@ -63,7 +63,7 @@
             dropdownTracker();
         }
 
-        if (changeTheaterMode && !runOnce) {
+        if (changeTheaterOnStart && !runOnce) {
             changeTheaterMode(true)
             runOnce = true;
         }
