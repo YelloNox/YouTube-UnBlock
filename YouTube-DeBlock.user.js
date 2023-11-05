@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.0.5
+// @version         1.0.6
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -122,10 +122,6 @@
             isChangingFrame = false;
         }
         console.log("ChangingFrames: " + changingFrame)
-    }
-
-    function restRead() {
-        null;
     }
 
     // -------------- Actions -------------- //
@@ -370,10 +366,12 @@
 
     // Find ID Location
     var exsistingParent = document.getElementById("end");
+    console.log("Found exsistingParent: " + exsistingParent);
 
     // Add Container to Page
     var exsistingParent = document.getElementById("end");
     exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
+    console.log("Added customContainer to page");
 
      // -------------- Active Listeners -------------- //
 
