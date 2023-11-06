@@ -20,7 +20,7 @@
     // Original Youtube URL
     const youtubeURL = "youtube.com";
     // Change to theater mode on load
-    const changeTheaterOnStart = true;
+    const changeTheaterOnStart = false;
 
     // Domains to redirect to.
     var domainList = [
