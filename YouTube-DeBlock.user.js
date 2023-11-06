@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.0.6
+// @version         1.0.7
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -13,9 +13,10 @@
 (function () {
     // Any class the blocker uses
     const blockerClass = 'ytd-enforcement-message-view-model';
-    // Any class on the broken video
-    //  yt-playability-error-supported-renderers
+    // Any class on the broken video (e.x. yt-playability-error-supported-renderers)
     const ogVideoClass = 'yt-playability-error-supported-renderers';
+    // Class of the parent for the custom content locaiton
+    const customContentParentID = 'end';
     // Original Youtube URL
     const youtubeURL = "youtube.com";
     // Change to theater mode on load
@@ -43,7 +44,7 @@
     // -------------- Main Loop Funcitons -------------- //
 
     // Function that checks if the page is even blocked
-    var runOnce = false;
+    var theaterStartRunOnce = false;
     function checkClass() {
         const elements = document.querySelectorAll("." + blockerClass);
 
@@ -62,10 +63,10 @@
             urlTracker();
             dropdownTracker();
         }
-
-        if (changeTheaterOnStart && !runOnce) {
+        
+        if (changeTheaterOnStart && !theaterStartRunOnce) {
             changeTheaterMode(true)
-            runOnce = true;
+            theaterStartRunOnce = true;
         }
     }
 
@@ -87,21 +88,32 @@
     // Checks if the dropdown has changed
     function dropdownTracker() {
         var dropdown = document.getElementById("dropdown");
-
         if (dropdown) {
+            changeSelection(dropdown);
+        }
+    }
+
+    function changeSelection(dropdown) {
+        try {
             dropdown.addEventListener('change', function () {
-                var newValue = dropdown.value;
-
-                // Check if the value has actually changed
-                if (newValue !== previousDropdownValue) {
-                    newDomain = domainList[newValue];
-                    console.log("Selection Changed: " + newDomain);
-                    reloadFrame();
-
-                    // Update the previousValue variable
-                    previousDropdownValue = newValue;
-                }
+                checkDropdownChange(dropdown);
             });
+        } catch (error) {
+            console.error("Error [changeSelection]: " + error);
+        }
+    }
+
+    function checkDropdownChange(dropdown) {
+        var newValue = dropdown.value;
+
+        // Check if the value has actually changed
+        if (newValue !== previousDropdownValue) {
+            newDomain = domainList[newValue];
+            console.log("Selection Changed: " + newDomain);
+            reloadFrame();
+
+            // Update the previousValue variable
+            previousDropdownValue = newValue;
         }
     }
 
@@ -130,9 +142,13 @@
     function removeElementsByClassName(removeClass) {
         console.log("Removing [removeElementsByClassName]: " + removeClass);
         const elements = document.querySelectorAll('.' + removeClass);
-        elements.forEach(element => {
-            element.remove();
-        });
+        try {
+            elements.forEach(element => {
+                element.remove();
+            });
+        } catch (error) {
+            console.error("Error removing elements [removeElementsByClassName]: " + error);
+        }
     }
 
     // Checks string and returns if contains matching text
@@ -145,9 +161,13 @@
     function getNewURL(newDomain) {
         console.log("New URL [newDomain]: " + newDomain);
         const currentURL = window.location.href;
-        if (currentURL.includes(youtubeURL)) {
-            const newURL = currentURL.replace(youtubeURL, newDomain);
-            return newURL;
+        try {
+            if (currentURL.includes(youtubeURL)) {
+                const newURL = currentURL.replace(youtubeURL, newDomain);
+                return newURL;
+            }
+        } catch (error) {
+            console.error("Error [newURL]: " + error);
         }
     }
 
@@ -156,14 +176,18 @@
         console.log("Adding [addDomainToURLs]");
         const links = document.querySelectorAll('a');
 
-        links.forEach(link => {
-            let href = link.getAttribute('href');
-            if (href && !href.startsWith('http') && !href.startsWith('www')) {
-                href = 'https://www.' + youtubeURL + href;
+        try {
+            links.forEach(link => {
+                let href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('www')) {
+                    href = 'https://www.' + youtubeURL + href;
 
-                link.setAttribute('href', href);
-            }
-        });
+                    link.setAttribute('href', href);
+                }
+            });
+        } catch (error) {
+            console.error("[addDomainToURLs] #1", error);
+        }
     }
 
     // Is it the first video change, or recurring?
@@ -199,36 +223,44 @@
             URL = URL.replace("watch?v=", "");
             console.log("Is Not Playlist [fixURL]: " + URL);
         }
-        if (isURL && isTimestamp){
+        if (isURL && isTimestamp) {
             URL = URL.split("&t=")[0];
             console.log("URL Split [fixURL]: " + URL);
         }
         return URL;
     }
 
-    var theaterMode = true;
-    function toggleTheater(){
-        if (theaterMode) {
+    var theaterModeToggle = true;
+    function toggleTheater() {
+        if (theaterModeToggle) {
             console.log("Changing Mode [toggleTheater]: Off");
-            theaterMode = false;
+            theaterModeToggle = false;
         } else {
             console.log("Changing Mode [toggleTheater]: On");
-            theaterMode = true;
+            theaterModeToggle = true;
         }
-        changeTheaterMode(theaterMode)
+        changeTheaterMode(theaterModeToggle)
     }
 
+    // Thanx https://stackoverflow.com/questions/53584026/toggle-the-cinema-mode-on-youtube-with-javascript :>
     function changeTheaterMode(state) {
-        if (state) {
-            collection = document.getElementsByTagName('ytd-watch-flexy');
-            ytd_watch_flexy = collection.item(0);
-            ytd_watch_flexy.theater = true;
-            console.log("Theater On [changeTheaterMode]");
-        } else {
-            collection = document.getElementsByTagName('ytd-watch-flexy');
-            ytd_watch_flexy = collection.item(0);
-            ytd_watch_flexy.theater = false;
-            console.log("Theater Off [changeTheaterMode]");
+        try {
+            const collection = document.getElementsByTagName('ytd-watch-flexy');
+            const ytd_watch_flexy = collection.item(0);
+            if (!ytd_watch_flexy) {
+                console.error("No ytd-watch-flexy Found[changeTheaterMode]");
+                return;
+            }
+            
+            if (state) {
+                ytd_watch_flexy.theater = true;
+                console.log("Theater On [changeTheaterMode]");
+            } else {
+                ytd_watch_flexy.theater = false;
+                console.log("Theater Off [changeTheaterMode]");
+            }
+        } catch (error) {
+            console.error("Theater-Mode Error [changeTheaterMode]: " + error);
         }
     }
 
@@ -241,46 +273,60 @@
 
         newURL = fixURL(newURL);
 
-        elements.forEach(element => {
-            const iframe = document.createElement('iframe');
-            iframe.width = '100%';
-            iframe.height = '100%';
-            iframe.src = newURL;
-            iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-            // autoplay                   ^ (autoplay removed after bug; also never worked anyhow)
-            iframe.allowFullscreen = true;
-            iframe.zIndex = '9999';
+        try {
+            elements.forEach(element => {
+                const iframe = document.createElement('iframe');
+                iframe.width = '100%';
+                iframe.height = '100%';
+                iframe.src = newURL;
+                iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                // autoplay                   ^ (autoplay removed after bug; also never worked anyhow)
+                iframe.allowFullscreen = true;
+                iframe.zIndex = '9999';
 
-            // Replace the existing element with the custom URL
-            element.parentNode.replaceChild(iframe, element);
-            console.log("Modified URL:", newURL);
-        });
+                // Replace the existing element with the custom URL
+                element.parentNode.replaceChild(iframe, element);
+                console.log("Modified URL:", newURL);
+            });
+        } catch (error) {
+            console.error("Error creating iframe [createJFrame]: " + error);
+        }
     }
 
     // Removes the original video frame.
     function removeOgIframe() {
         const iframes = document.querySelectorAll('iframe');
+
         console.log("removing jFrame [removeOgIframe]");
-        iframes.forEach(iframe => {
-            const paragraph = document.createElement('p');
-            paragraph.className = tempReplaceClass;
-            iframe.parentNode.insertBefore(paragraph, iframe);
-            iframe.remove();
-            console.log("Out with the old [removeOgIframe]");
-        });
+        try {
+            iframes.forEach(iframe => {
+                const paragraph = document.createElement('p');
+                paragraph.className = tempReplaceClass;
+                iframe.parentNode.insertBefore(paragraph, iframe);
+                iframe.remove();
+                console.log("Out with the old [removeOgIframe]");
+            });
+        } catch (error) {
+            console.error("Error [removeOgIframe]: " + error);
+        }
     }
 
     // -------------- Experimental Features (unused) -------------- //
 
     // Save dropdown selection to local storage
     function dropdownStore() {
-        rememberButton.addEventListener('click', function () {
-            localStorage.setItem('selectedOption', dropdown.value);
-            console.log("Selection Stored");
-        });
+        try {
+            rememberButton.addEventListener('click', function () {
+                localStorage.setItem('selectedOption', dropdown.value);
+                console.log("Selection Stored");
+            });
+        } catch (error) {
+            console.error("Error [dropdownStore]: " + error);
+        }
     }
 
     // -------------- Custom HTML Start -------------- //
+
 
     // Custom CSS
     var css = `
@@ -325,62 +371,75 @@
     }
     `;
 
-    // Create Container
-    var customContainer = document.createElement("div");
-    customContainer.classList.add("custom-container");
-/* Not Complete
-    // Create Button Theater Mode
-    var theaterButton = document.createElement('button');
-    theaterButton.textContent = 'Theater';
-    theaterButton.classList.add("btn-style", "main-btn");
-*/
-    // Create Button Reload
-    var reloadButton = document.createElement('button');
-    reloadButton.textContent = 'Reload Frame';
-    reloadButton.classList.add("btn-style", "main-btn");
+    var loaded = false;
+    function customContent() {
+        // Create Container
+        var customContainer = document.createElement("div");
+        customContainer.classList.add("custom-container");
+        /* Not Complete
+        // Create Button Theater Mode
+        var theaterButton = document.createElement('button');
+        theaterButton.textContent = 'Theater';
+        theaterButton.classList.add("btn-style", "main-btn");
+        */
+        // Create Button Reload
+        var reloadButton = document.createElement('button');
+        reloadButton.textContent = 'Reload Frame';
+        reloadButton.classList.add("btn-style", "main-btn");
 
-    // Create Dropdown Menu
-    var dropdownButton = document.createElement("select");
-    dropdownButton.id = "dropdown";
-    dropdownButton.classList.add("btn-style");
-    dropdownButton.innerHTML = `
-        <option class="dropdown-content" value="0">YouTube Embed</option>
-        <option class="dropdown-content" value="1">YouT-ube [Fixed?]</option>
-        Broke <option class="dropdown-content" value="2">NSFW YouTube [Broken!]</option>
-    `;
+        // Create Dropdown Menu
+        var dropdownButton = document.createElement("select");
+        dropdownButton.id = "dropdown";
+        dropdownButton.classList.add("btn-style");
+        dropdownButton.innerHTML = `
+            <option class="dropdown-content" value="0">YouTube Embed</option>
+            <option class="dropdown-content" value="1">YouT-ube [Fixed?]</option>
+            Broke <option class="dropdown-content" value="2">NSFW YouTube [Broken!]</option>
+        `;
 
-    // -------------- Custom HTML End -------------- //
+        // -------------- Custom HTML End -------------- //
 
-    // ----- Appending custom content to page ----- //
+        // ----- Appending custom content to page ----- //
 
-    // Add items to Container
-    
-    // Coming Soon: customContainer.appendChild(theaterButton);
-    customContainer.appendChild(reloadButton);
-    customContainer.appendChild(dropdownButton);
+        // Add items to Container
 
-    // Append CSS to page
-    var style = document.createElement("style");
-    style.appendChild(document.createTextNode(css));
-    document.head.appendChild(style);
+        // Coming Soon: customContainer.appendChild(theaterButton);
+        customContainer.appendChild(reloadButton);
+        customContainer.appendChild(dropdownButton);
 
-    // Find ID Location
-    var exsistingParent = document.getElementById("end");
-    console.log("Found exsistingParent: " + exsistingParent);
+        // Append CSS to page
+        var style = document.createElement("style");
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
 
-    // Add Container to Page
-    var exsistingParent = document.getElementById("end");
-    exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
-    console.log("Added customContainer to page");
+        // Find ID Location
+        var exsistingParent = document.getElementById(customContentParentID);
+        console.log("Found exsistingParent: " + exsistingParent);
 
-     // -------------- Active Listeners -------------- //
+        // Add Container to Page
+        exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
+        console.log("Added customContainer to page");
 
-    // Listen for reload BTN click (SOON)
-    // theaterButton.addEventListener('click', toggleTheater);
-    // reloadButton.addEventListener('click', reloadFrame);
+    }
+
+    try {
+        window.addEventListener('DOMContentLoaded', customContent);
+    } catch (error) {
+        console.error("Error [customContent]: " + error);
+    }
+
+    // -------------- Active Listeners -------------- //
+    if (loaded) {
+        // theaterButton.addEventListener('click', toggleTheater);
+        reloadButton.addEventListener('click', reloadFrame);
+    }
 
     // Run every second to check for updates on page (Will not ping any server till a new page is clicked)
-    const classCheckInterval = setInterval(checkClass, 1000);
-    document.addEventListener('click', checkClass, 1000);
+    try {
+        window.setInterval(checkClass, 1000);
+        document.addEventListener('click', checkClass, 1000);
+    } catch (error) {
+        console.error("Error Running [classCheckInterval]: " + error);
+    }
 
 })();
