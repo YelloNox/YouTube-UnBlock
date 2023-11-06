@@ -58,7 +58,7 @@ This script will not run if a block is not detected. Meaning, if the script does
 - [ ] Setting saved to local storage (for language implementation mostly)
 
 ## 🎦 Theater Mode?
-There is no official implementation yet, but you can press `f` and reload the page. This will swap between regular and cinematic mode.
+There is no official implementation yet, but you can press `t` and reload the page. This will swap between regular and cinematic mode.
 
 ## 💔 Issues?
 If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
