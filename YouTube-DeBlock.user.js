@@ -371,6 +371,7 @@
     }
     `;
 
+    var ranCustomContentOnce = false;
     function customContent() {
         // Create Container
         var customContainer = document.createElement("div");
@@ -421,11 +422,17 @@
 
         // theaterButton.addEventListener('click', toggleTheater);
         reloadButton.addEventListener('click', reloadFrame);
+
+        ranCustomContentOnce = true;
     }
 
     try {
-        customContent();
-        console.log("Loaded [customContent]");
+        if (ranCustomContentOnce) {
+            customContent();
+            console.log("Loaded [customContent]");
+        } else {
+            console.log("Tried to load an allready loaded [customContent]");
+        }
     } catch (error) {
         console.error("Error [customContent]: " + error);
     }
