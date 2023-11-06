@@ -423,7 +423,8 @@
     }
 
     try {
-        window.addEventListener('DOMContentLoaded', customContent);
+        customContent();
+        console.log("Loaded [customContent]");
     } catch (error) {
         console.error("Error [customContent]: " + error);
     }
