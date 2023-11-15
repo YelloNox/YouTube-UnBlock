@@ -8,7 +8,6 @@
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
 // @match           *://www.youtube.com/*
 // @grant           none
-// @grant           GM_registerMenuCommand
 // ==/UserScript==
 
 (function () {
