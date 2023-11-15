@@ -1,14 +1,14 @@
 # YouTube UnBlock
 
-**Status:** This project is fully functional as of 10/27/2023. (bugs bugs bugs. Can't catch-em-all)
+**Status:** This project is fully(ish) functional as of 11/14/2023. (bugs bugs bugs. Can't catch-em-all)
 
 ## Is this blocker getting in the way? 
 ![a rat](/img/YouTube-ad-blocker-not-experiment-dark.png)
 
 ## 🩹 Look no further, as here is a bandied
-The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds your choice of an [other Source](#custom-sources) in place of [YouTube](https://youtube.com) videos. You are still on the official YouTube webpage with full access to comments, likes, playlists, and recommendations.
+The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds a [better frame](#custom-sources) in place of YouTube videos. You are still on the official YouTube™️ webpage with full access to comments, likes, (borked playlists), and recommendations.
 
->Note: I did not create any of the [Custom Sources](#custom-sources) nor do I have any affiliations with them. I only redirect all links on "youtube.com".
+>Note: I did not create any of the [Sources](#custom-sources) nor do I have any affiliations with them. I only embed them into "youtube.com".
 
 ## 🚫 Ad-Blocker Recommendation  
 This script does not block ads, it only removes the block. I recommend [uBlock Origin](https://github.com/gorhill/uBlock) and [Decentraleyes](https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj). 
@@ -28,37 +28,41 @@ This script does not block ads, it only removes the block. I recommend [uBlock O
 ✅ Pros
 ---
 - No Blockers
-- No Ads
+- No Ads (Up to your uBlock)
 - Access to:
-  - Comments
   - Likes
+  - Comments
   - Recommendations
-- Stays on YouTube
+- Stay on YouTube
 - Full-Screen (YouTube Embed Only)
 - Track Watch History (YouTube Embed Only)
 
 ❌ Cons
 ---
 - Some Bugs
-- Playlists are broken (currently)
-- Timestamps do not work. The video reverts to the beginning.
+- Playlists are broken (I am unable to fix currently☹️)
+- Timestamps do not work.
 
 ## 🥫 Exceptions
 This script will not run if a block is not detected. Meaning, if the script does not find a block, none of the script functions will do anything.
 
 ## 🏠 Custom Sources
 - [yout-ube.com](https://yout-ube.com) - Should be fixed
-- [nsfwyoutube.com](https://nsfwyoutube.com) - Fix coming soon (whenever soon is)
+- Bugs, oh-no! ~~[nsfwyoutube.com](https://nsfwyoutube.com) - Fix might be coming soon (or)~~
 - Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
+## 📐 User Settings
+There is a `User Customization` section at the start of the script. Features:
+- Toggle Theater Button Visibility: `disableTheaterToggle`
+- Toggle Reload Button Visibility: `disableReloadToggle`
+- Toggle Optons Menu Visibility: `disableOptionsMenu`
+
 ## ✈️ Plans?
+- [x] Theater Mode Toggle
 - [ ] Add multi-language support (aka, translations with google translate)
 - [ ] Fix Bug: Frame loads multiple times! Add the check to each runtime. 
 - [ ] So... Playlists are broken :O. Youtube thinks the videos fail to load, then skips them, repeatedly, forever...
 - [ ] Setting saved to local storage (for language implementation mostly)
-
-## 🎦 Theater Mode?
-There is no official implementation yet, but you can press `t` and reload the page. This will swap between regular and cinematic mode.
 
 ## 💔 Issues?
 If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!

@@ -2,15 +2,24 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.1.0
+// @version         1.1.1
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
 // @match           *://www.youtube.com/*
 // @grant           none
+// @grant           GM_registerMenuCommand
 // ==/UserScript==
 
 (function () {
+    'use strict';
+
+    /* User Customization */
+    const disableTheaterToggle = false;
+    const disableReloadToggle = false;
+    const disableOptionsMenu = false;
+    /* End User Customization */
+
     // Any class the blocker uses
     const blockerClass = 'ytd-enforcement-message-view-model';
     // Any class on the broken video (e.x. yt-playability-error-supported-renderers)
@@ -63,7 +72,7 @@
             urlTracker();
             dropdownTracker();
         }
-        
+
         if (changeTheaterOnStart && !theaterStartRunOnce) {
             changeTheaterMode(true)
             theaterStartRunOnce = true;
@@ -210,23 +219,31 @@
         isBlocked = false;
     }
 
-    // Edits the URL to include "watch?v="
+    // Fixes unusable URL(s)
     function fixURL(URL) {
+        const playlistCheck = "&list=";
+        const watchStamp = "watch?v=";
+        const timestamp = "&t=";
         const isURL = checkText(URL, youtubeURL);
-        const isPlaylist = checkText(URL, "&list=");
-        const isTimestamp = checkText(URL, "&t=");
+        const isPlaylist = checkText(URL, playlistCheck);
+        const isTimestamp = checkText(URL, timestamp);
 
         console.log("isURL:" + isURL + " isPlaylist:" + isPlaylist + " isTimestamp:" + isTimestamp);
         console.log("URL [fixURL]:" + URL);
 
-        if (isURL && !isPlaylist) {
-            URL = URL.replace("watch?v=", "");
+        if (isURL) {
+            URL = URL.replace(watchStamp, "");
             console.log("Is Not Playlist [fixURL]: " + URL);
         }
         if (isURL && isTimestamp) {
             URL = URL.split("&t=")[0];
-            console.log("URL Split [fixURL]: " + URL);
+            console.log("URL Split Timestamp Fix [fixURL]: " + URL);
         }
+        if (isPlaylist) {
+            URL = URL.split(playlistCheck)[0];
+            console.log("URL Split Playlist Fix [fixURL]: " + URL);
+        }
+
         return URL;
     }
 
@@ -251,7 +268,7 @@
                 console.error("No ytd-watch-flexy Found[changeTheaterMode]");
                 return;
             }
-            
+
             if (state) {
                 ytd_watch_flexy.theater = true;
                 console.log("Theater On [changeTheaterMode]");
@@ -263,6 +280,7 @@
             console.error("Theater-Mode Error [changeTheaterMode]: " + error);
         }
     }
+
 
     // -------------- JFrame Control -------------- //
     // Create video embedding frame
@@ -376,12 +394,12 @@
         // Create Container
         var customContainer = document.createElement("div");
         customContainer.classList.add("custom-container");
-        /* Not Complete
+        /* Not Complete */
         // Create Button Theater Mode
         var theaterButton = document.createElement('button');
         theaterButton.textContent = 'Theater';
         theaterButton.classList.add("btn-style", "main-btn");
-        */
+        /**/
         // Create Button Reload
         var reloadButton = document.createElement('button');
         reloadButton.textContent = 'Reload Frame';
@@ -391,11 +409,14 @@
         var dropdownButton = document.createElement("select");
         dropdownButton.id = "dropdown";
         dropdownButton.classList.add("btn-style");
-        dropdownButton.innerHTML = `
-            <option class="dropdown-content" value="0">YouTube Embed</option>
-            <option class="dropdown-content" value="1">YouT-ube [Fixed?]</option>
-            Broke <option class="dropdown-content" value="2">NSFW YouTube [Broken!]</option>
-        `;
+        const options = [
+            { value: "0", text: "YouTube Embed" },
+            { value: "1", text: "YouTube [Fixed]" },
+            //{ value: "2", text: "NSFW YouTube [Broken!]" } Fix later?
+        ]
+        var htmlContent = options.map(option => `<option class="dropdown-content" value="${option.value}">${option.text}</option>`).join('');
+        dropdownButton.innerHTML = htmlContent;
+
 
         // -------------- Custom HTML End -------------- //
 
@@ -403,9 +424,16 @@
 
         // Add items to Container
 
-        // Coming Soon: customContainer.appendChild(theaterButton);
-        customContainer.appendChild(reloadButton);
-        customContainer.appendChild(dropdownButton);
+        if (!disableTheaterToggle) {
+            customContainer.appendChild(theaterButton);
+        }
+        if (!disableReloadToggle) {
+            customContainer.appendChild(reloadButton);
+        }
+        if (!disableOptionsMenu) {
+            customContainer.appendChild(dropdownButton);
+        }
+
 
         // Append CSS to page
         var style = document.createElement("style");
@@ -420,7 +448,7 @@
         exsistingParent.insertBefore(customContainer, exsistingParent.firstChild);
         console.log("Added customContainer to page");
 
-        // theaterButton.addEventListener('click', toggleTheater);
+        theaterButton.addEventListener('click', toggleTheaterStingyWorkaround);
         reloadButton.addEventListener('click', reloadFrame);
 
         ranCustomContentOnce = true;
@@ -431,7 +459,7 @@
             customContent();
             console.log("Loaded [customContent]");
         } else {
-            console.log("Tried to load an allready loaded [customContent]");
+            console.log("Tried to load, but was allready loaded [customContent]");
         }
     } catch (error) {
         console.error("Error [customContent]: " + error);
@@ -442,9 +470,25 @@
     // Run every second to check for updates on page (Will not ping any server till a new page is clicked)
     try {
         window.setInterval(checkClass, 1000);
+    } catch (error) {
+        console.error("Error Running [window.setInterval]: " + error);
+    }
+    try {
         document.addEventListener('click', checkClass, 1000);
     } catch (error) {
-        console.error("Error Running [classCheckInterval]: " + error);
+        console.error("Error Running [document.addEventListener]: " + error);
+    }
+
+    // ------------- Passive Listeners ------------- //
+
+    // Fullscreen Toggle
+    function toggleTheaterStingyWorkaround() {
+        const event = new KeyboardEvent('keydown', {
+            key: "t",
+            keyCode: 84
+        });
+        document.dispatchEvent(event);
+        location.reload();
     }
 
 })();
