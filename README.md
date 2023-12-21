@@ -58,7 +58,7 @@ There is a `User Customization` section at the start of the script. Features:
 - Toggle Options Menu Visibility: `disableOptionsMenu`
 - [Language]: `language`
 
-## Language Options / Opciones de Idioma
+## 🫂 Language Options / Opciones de Idioma
 Read More: https://github.com/YelloNolo/YouTube-UnBlock/blob/main/language.md
 
 To change your preferred language for the script, edit the `language` variable at the start of the script.
