@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name            YouTube DeBlock
+// @name            YouTube DeBlock - Playlist Test Branch
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.1.3
+// @version         1.1.4
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
