@@ -123,7 +123,7 @@
 
     // Reload Frame when "Reload Frame" button is clicked
     function reloadFrame() {
-        removePlaylistIndex();
+        cleanHtmlLinksOfPattern("index=\\d+");
         replaceVideo();
         addDomainToURLs();
     }
@@ -199,56 +199,6 @@
         }
     }
 
-    // Removes the "index" of playlist videos (attempt to fix skipping videos)
-    function removePlaylistIndex() {
-        const brokePlaylistCheck = "&index=";
-        var pattern = "index=\\d+";
-        var tempUrl = window.location.href;
-        var newUrl = "";
-
-        const isBrokePlaylist = checkText(tempUrl, brokePlaylistCheck);
-
-        if (isBrokePlaylist) {
-            console.log("Changing [removePlaylistIndex]: " + tempUrl);
-            newUrl = tempUrl.replace(pattern, "");
-            console.log("Changed To [removePlaylistIndex]: " + newUrl);
-            window.location.href = newUrl;
-        }
-
-        cleanHtmlOfPattern(pattern);
-    }
-
-    function cleanHtmlOfPattern(pattern) {
-        console.log(
-            'Removing "' + pattern + '" from HTML [cleanHtmlOfPattern]'
-        );
-        const regex = new RegExp(pattern, "g");
-
-        try {
-            var cleanedCount = 0;
-            function replaceText(node) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    if (node.nodeValue.match(regex)) {
-                        node.nodeValue = node.nodeValue.replace(regex, "");
-                        cleanedCount++;
-                    }
-                } else {
-                    for (let child of node.childNodes) {
-                        replaceText(child);
-                    }
-                }
-            }
-
-            replaceText(document.body);
-
-            console.log(
-                "Cleaned " + cleanedCount + " occurrences! [cleanHtmlOfPattern]"
-            );
-        } catch (error) {
-            console.error("[cleanHtmlOfPattern] Error: ", error);
-        }
-    }
-
     // Is it the first video change, or recurring?
     function replaceVideo() {
         if (!isSubChange) {
@@ -272,11 +222,14 @@
     // Fixes unusable URL(s)
     function fixURL(URL) {
         const watchStamp = "watch?v=";
+        const brokePlaylistCheck = "&index=";
         const timestamp = "&t=";
         const playlistCheck = "&list=";
+        var tempUrl = window.location.href;
         const isURL = checkText(URL, youtubeURL);
         const isPlaylist = checkText(URL, playlistCheck);
         const isTimestamp = checkText(URL, timestamp);
+        const isBrokePlaylist = checkText(tempUrl, brokePlaylistCheck);
 
         console.log(
             "isURL:" +
@@ -302,11 +255,59 @@
             URL = URL.split(playlistCheck)[0];
             console.log("URL Split Playlist Fix [fixURL]: " + URL);
         }
+        if (isBrokePlaylist) {
+            removePlaylistIndex(tempUrl);
+            console.log("Playlist URL Broke! [fixURL]: " + tempUrl);
+        }
 
         return URL;
     }
 
+    // Removes the "index" of playlist videos (attempt to fix skipping videos)
+    function removePlaylistIndex(tempUrl) {
+        var regex = /&index=\d+/;
+        var newUrl = "";
+
+        console.log(
+            "Changing [removePlaylistIndex]: " + tempUrl + "\nWith: " + regex
+        );
+        newUrl = tempUrl.replace(regex, "");
+        console.log("Changed To [removePlaylistIndex]: " + newUrl);
+        window.location.href = newUrl;
+    }
+
+    // Removes all instances of a pattern from HTML
+    function cleanHtmlLinksOfPattern(pattern) {
+        console.log(
+            'Removing "' + pattern + '" from HTML [cleanHtmlLinksOfPattern]'
+        );
+        const links = document.querySelectorAll("a");
+        const regex = new RegExp(pattern);
+
+        var i = 0;
+        try {
+            links.forEach((link) => {
+                let href = link.getAttribute("href");
+                if (href && href.match(regex)) {
+                    href = href.replace(regex, "");
+                    link.setAttribute("href", href);
+                }
+                i++;
+            });
+            console.log(
+                "Cleaned " +
+                    i +
+                    " links of " +
+                    pattern +
+                    "! [cleanHtmlLinksOfPattern]"
+            );
+        } catch (error) {
+            console.error("[cleanHtmlLinksOfPattern] Error: ", error);
+        }
+    }
+
     var theaterModeToggle = true;
+
     function toggleTheater() {
         if (theaterModeToggle) {
             console.log("Changing Mode [toggleTheater]: Off");
