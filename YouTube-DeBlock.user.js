@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.1.3
+// @version         1.1.5
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -245,15 +245,31 @@
             console.log("Is Not Playlist [fixURL]: " + URL);
         }
         if (isURL && isTimestamp) {
-            URL = URL.split("&t=")[0];
-            console.log("URL Split Timestamp Fix [fixURL]: " + URL);
+            URL = URL.split(timestamp)[0];
+            console.log("\nURL Split Timestamp Fix [fixURL]: " + URL);
         }
         if (isPlaylist) {
             URL = URL.split(playlistCheck)[0];
-            console.log("URL Split Playlist Fix [fixURL]: " + URL);
+            console.log("\nURL Split Playlist Fix [fixURL]: " + URL);
         }
 
         return URL;
+    }
+
+    // Fixes webpage address
+    function fixPage() {
+        var tmpURL = window.location.href;
+        const playlistCheck = "&list=";
+        const isBrokePlaylist = checkText(tmpURL, playlistCheck);
+
+        if (isBrokePlaylist) {
+            printAlert(0);
+            var regex = /(&list)\D+\d+/g;
+            console.log("URL Fix Original: [fixPage]: " + tmpURL);
+            tmpURL = tmpURL.replace(regex, "");
+            console.log("URL Fix New: [fixPage]: " + tmpURL);
+            window.location.href = tmpURL;
+        }
     }
 
     var theaterModeToggle = true;
@@ -297,6 +313,7 @@
         const elements = document.querySelectorAll("." + classToOverturn);
         console.log("newURL Beginning [createJFrame]: " + newURL);
 
+        fixPage();
         newURL = fixURL(newURL);
 
         try {
@@ -465,6 +482,134 @@
         return languageTranslations && languageTranslations[xtxt]
             ? languageTranslations[xtxt][vers]
             : undefined;
+    }
+
+    // alertT is the alert type (i.e. invalid page...)
+    function printAlert(alertT) {
+        const translations = {
+            en: {
+                0: [
+                    "Oops! Something went wrong.\n\n- Issue: The playlist feature is currently not working.\n- Action: You will be redirected to a static page shortly.\n\nI am looking for a fix.",
+                ],
+            },
+
+            de: {
+                0: [
+                    "Hoppla! Etwas ist schief gelaufen.\n\n- Problem: Die Playlist-Funktion funktioniert derzeit nicht.\n- Aktion: Sie werden in Kürze auf eine Standardseite umgeleitet.\n\nIch suche nach einer Lösung.",
+                ],
+            },
+
+            es: {
+                0: [
+                    "¡Vaya! Algo salió mal.\n\n- Problema: La función de lista de reproducción no está funcionando actualmente.\n- Acción: Serás redirigido a una página estándar en breve.\n\nEstoy buscando una solución.",
+                ],
+            },
+
+            fr: {
+                0: [
+                    "Oups ! Un problème est survenu.\n\n- Problème : La fonction de playlist ne fonctionne pas actuellement.\n- Action : Vous serez redirigé vers une page standard sous peu.\n\nJe cherche une solution.",
+                ],
+            },
+
+            it: {
+                0: [
+                    "Ops! Qualcosa è andato storto.\n\n- Problema: La funzione playlist non sta funzionando al momento.\n- Azione: Sarai reindirizzato a una pagina standard a breve.\n\nSto cercando una soluzione.",
+                ],
+            },
+
+            jp: {
+                0: [
+                    "おっと！何かが間違っていました。\n\n- 問題：プレイリスト機能は現在動作していません。\n- 処置：間もなく標準ページにリダイレクトされます。\n\n修正を探しています。",
+                ],
+            },
+
+            ko: {
+                0: [
+                    "이런! 문제가 발생했습니다.\n\n- 문제: 플레이리스트 기능이 현재 작동하지 않습니다.\n- 조치: 곧 표준 페이지로 리디렉션됩니다.\n\n해결책을 찾고 있습니다.",
+                ],
+            },
+
+            nl: {
+                0: [
+                    "Oeps! Er is iets misgegaan.\n\n- Probleem: De afspeellijstfunctie werkt momenteel niet.\n- Actie: Je wordt binnenkort omgeleid naar een standaardpagina.\n\nIk ben op zoek naar een oplossing.",
+                ],
+            },
+
+            pl: {
+                0: [
+                    "Ups! Coś poszło nie tak.\n\n- Problem: Funkcja listy odtwarzania obecnie nie działa.\n- Działanie: Wkrótce zostaniesz przekierowany na standardową stronę.\n\nSzukam rozwiązania.",
+                ],
+            },
+
+            pt: {
+                0: [
+                    "Ops! Algo deu errado.\n\n- Problema: A função de playlist atualmente não está funcionando.\n- Ação: Você será redirecionado para uma página padrão em breve.\n\nEstou procurando uma solução.",
+                ],
+            },
+
+            ru: {
+                0: [
+                    "Ой! Что-то пошло не так.\n\n- Проблема: В настоящее время функция плейлиста не работает.\n- Действие: Скоро вы будете перенаправлены на стандартную страницу.\n\nЯ ищу решение.",
+                ],
+            },
+
+            ar: {
+                0: [
+                    "عفوًا! هناك خطأ ما.\n\n- المشكلة: ميزة قائمة التشغيل لا تعمل حاليًا.\n- الإجراء: ستتم إعادتك إلى صفحة قياسية قريبًا.\n\nأبحث عن حل.",
+                ],
+            },
+
+            zh: {
+                0: [
+                    "哎呀！出了点问题。\n\n- 问题：播放列表功能目前无法使用。\n- 操作：您将很快被重定向到标准页面。\n\n我正在寻找解决方案。",
+                ],
+            },
+
+            hi: {
+                0: [
+                    "उफ! कुछ गलत हो गया।\n\n- समस्या: प्लेलिस्ट सुविधा वर्तमान में काम नहीं कर रही है।\n- कार्रवाई: आपको जल्द ही एक मानक पृष्ठ पर अनुप्रेषित किया जाएगा।\n\nमैं एक समाधान ढूँढ रहा हूँ।",
+                ],
+            },
+
+            sv: {
+                0: [
+                    "Oops! Något gick fel.\n\n- Problem: Spellistefunktionen fungerar inte för närvarande.\n- Åtgärd: Du kommer att omdirigeras till en standard sida inom kort.\n\nJag letar efter en lösning.",
+                ],
+            },
+
+            no: {
+                0: [
+                    "Oisann! Noe gikk galt.\n\n- Problem: Spillelistefunksjonen virker ikke for øyeblikket.\n- Handling: Du vil bli omdirigert til en standardside snart.\n\nJeg ser etter en løsning.",
+                ],
+            },
+
+            da: {
+                0: [
+                    "Ups! Noget gik galt.\n\n- Problem: Afspilningsliste funktionen virker ikke i øjeblikket.\n- Handling: Du vil snart blive omdirigeret til en standard side.\n\nJeg leder efter en løsning.",
+                ],
+            },
+
+            cs: {
+                0: [
+                    "Jejda! Něco se pokazilo.\n\n- Problém: Funkce playlistu momentálně nefunguje.\n- Akce: Brzy budete přesměrováni na standardní stránku.\n\nHledám řešení.",
+                ],
+            },
+
+            hu: {
+                0: [
+                    "Hoppá! Valami hiba történt.\n\n- Probléma: A lejátszási lista funkció jelenleg nem működik.\n- Teendő: Hamarosan egy szabványos oldalra lesz átirányítva.\n\nMegoldást keresek.",
+                ],
+            },
+
+            tr: {
+                0: [
+                    "Oops! Bir şeyler yanlış gitti.\n\n- Sorun: Oynatma listesi özelliği şu anda çalışmıyor.\n- Eylem: Yakında standart bir say",
+                ],
+            },
+        };
+
+        const languageTranslations = translations[language];
+        alert(languageTranslations[alertT]);
     }
 
     // -------------- Custom HTML Start -------------- //
