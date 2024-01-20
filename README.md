@@ -5,7 +5,7 @@
 ## Is this blocker getting in the way? 
 ![a rat](/img/YouTube-ad-blocker-not-experiment-dark.png)
 
-## 🩹 Look no further, as here is a bandied
+## 🩹 Look no further, as here is a bandaid
 The script [DeBlock](/YouTube-DeBlock.user.js) finds and removes the roadblock and embeds a [better frame](#custom-sources) in place of YouTube videos. You are still on the official YouTube™️ webpage with full access to comments, likes, (borked playlists), and recommendations.
 
 >Note: I did not create any of the [Sources](#custom-sources) nor do I have any affiliations with them. I only embed them into "youtube.com".
