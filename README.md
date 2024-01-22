@@ -1,6 +1,6 @@
 # YouTube UnBlock
 
-**Status:** This project is fully(ish) functional as of 1/6/2024. (bugs bugs bugs. Can't catch-em-all)
+**Status:** This project is fully(ish) functional as of 1/21/2024. (bugs bugs bugs. Can't catch-em-all)
 
 ## ❓ Is this blocker getting in the way?
 
