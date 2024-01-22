@@ -330,22 +330,6 @@
         }
     }
 
-    // Fixes webpage address
-    function fixPage() {
-        var tmpURL = window.location.href;
-        const playlistCheck = "&list=";
-        const isBrokePlaylist = checkText(tmpURL, playlistCheck);
-
-        if (isBrokePlaylist) {
-            printAlert(0);
-            var regex = /(&list)\D+\d+/g;
-            console.log("URL Fix Original: [fixPage]: " + tmpURL);
-            tmpURL = tmpURL.replace(regex, "");
-            console.log("URL Fix New: [fixPage]: " + tmpURL);
-            window.location.href = tmpURL;
-        }
-    }
-
     var theaterModeToggle = true;
 
     function toggleTheater() {
@@ -388,7 +372,6 @@
         const elements = document.querySelectorAll("." + classToOverturn);
         console.log("newURL Beginning [createJFrame]: " + newURL);
 
-        fixPage();
         newURL = fixURL(newURL);
 
         try {
