@@ -70,7 +70,7 @@ There is a `User Customization` section at the start of the script. Features:
 -   Toggle Theater Button Visibility: `disableTheaterToggle`
 -   Toggle Reload Button Visibility: `disableReloadToggle`
 -   Toggle Options Menu Visibility: `disableOptionsMenu`
--   [Language]: `language`
+-   Change Active Language: `language`
 
 ## 🫂 Language Options / Opciones de Idioma
 
