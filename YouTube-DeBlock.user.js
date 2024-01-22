@@ -2,7 +2,7 @@
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
 // @author          YelloNolo
-// @version         1.1.5
+// @version         1.1.6
 // @created         2023-10-10
 // @namespace       https://yello.zip
 // @homepage        https://github.com/YelloNolo/YouTube-Adblock
@@ -33,10 +33,25 @@
     const changeTheaterOnStart = false;
 
     // Domains to redirect to.
-    var domainList = ["youtube.com/embed", "yout-ube.com", "nsfwyoutube.com"];
+    var domainList = [
+        "youtube.com/embed",
+        "yout-ube.com",
+        "piped.kavin.rocks",
+        "subscriptions.gir.st",
+        "nsfwyoutube.com",
+    ];
+    // Does domain include www. (if not, need to remove later)
+    var domainListUrlStat = [
+        true, //"youtube.com/embed",
+        true, //"yout-ube.com",
+        false, //"piped.kavin.rocks",
+        false, //"subscriptions.gir.st",
+        false, //"nsfwyoutube.com",
+    ];
 
     // --- Do Not Touch --- //
     var newDomain = domainList[0];
+    var newDomainListUrlStat = domainListUrlStat[0];
     // Temp Functions //
     const tempReplaceClass = "replaceme";
     let isBlocked = false;
@@ -114,7 +129,12 @@
         // Check if the value has actually changed
         if (newValue !== previousDropdownValue) {
             newDomain = domainList[newValue];
-            console.log("Selection Changed: " + newDomain);
+            newDomainListUrlStat = domainListUrlStat[newValue];
+            console.log("Selection Changed [newDomain]: " + newDomain);
+            console.log(
+                "Selection Changed [newDomainListUrlStat]: " +
+                    newDomainListUrlStat
+            );
             reloadFrame();
 
             // Update the previousValue variable
@@ -170,7 +190,10 @@
         const currentURL = window.location.href;
         try {
             if (currentURL.includes(youtubeURL)) {
-                const newURL = currentURL.replace(youtubeURL, newDomain);
+                var newURL = currentURL.replace(youtubeURL, newDomain);
+                if (newDomainListUrlStat == false) {
+                    newURL = newURL.replace(/www./g, "");
+                }
                 return newURL;
             }
         } catch (error) {
@@ -378,103 +401,122 @@
         const translations = {
             en: {
                 theaterMode: ["Theater"],
-                reloadFrame: ["Reload Frame"],
-                dropdown: ["YouTube™", "YouTube [Embed]"],
+                reloadFrame: ["Reload Frame" ],
+                dropdown: ["YouTube™ [Embed]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             de: {
                 theaterMode: ["Theater"],
-                reloadFrame: ["Rahmen neu laden"],
-                dropdown: ["YouTube™", "YouTube [Einbetten]"],
+                reloadFrame: ["Rahmen neu laden" ],
+                dropdown: ["YouTube™ [Einbetten]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             es: {
                 theaterMode: ["Teatro"],
-                reloadFrame: ["Recargar Marco"],
-                dropdown: ["YouTube™", "YouTube [Incrustar]"],
+                reloadFrame: ["Recargar Marco" ],
+                dropdown: ["YouTube™ [Incrustar]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             fr: {
                 theaterMode: ["Théâtre"],
-                reloadFrame: ["Recharger le Cadre"],
-                dropdown: ["YouTube™", "YouTube [Intégrer]"],
+                reloadFrame: ["Recharger le Cadre" ],
+                dropdown: ["YouTube™ [Intégrer]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             it: {
                 theaterMode: ["Teatro"],
-                reloadFrame: ["Ricarica Cornice"],
-                dropdown: ["YouTube™", "YouTube [Incorpora]"],
+                reloadFrame: ["Ricarica Cornice" ],
+                dropdown: ["YouTube™ [Incorpora]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             jp: {
                 theaterMode: ["劇場"],
-                reloadFrame: ["フレームを再読み込み"],
-                dropdown: ["YouTube™", "YouTube [埋め込み]"],
+                reloadFrame: ["フレームを再読み込み" ],
+                dropdown: ["YouTube™ [埋め込み]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             ko: {
                 theaterMode: ["극장"],
-                reloadFrame: ["프레임 다시 로드"],
-                dropdown: ["YouTube™", "YouTube [임베드]"],
+                reloadFrame: ["프레임 다시 로드" ],
+                dropdown: ["YouTube™ [임베드]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             nl: {
                 theaterMode: ["Theater"],
-                reloadFrame: ["Frame Herladen"],
-                dropdown: ["YouTube™", "YouTube [Insluiten]"],
+                reloadFrame: ["Frame Herladen" ],
+                dropdown: ["YouTube™ [Insluiten]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             pl: {
                 theaterMode: ["Teatr"],
-                reloadFrame: ["Przeładuj Ramkę"],
-                dropdown: ["YouTube™", "YouTube [Osadź]"],
+                reloadFrame: ["Przeładuj Ramkę" ],
+                dropdown: ["YouTube™ [Osadź]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             pt: {
                 theaterMode: ["Teatro"],
-                reloadFrame: ["Recarregar Quadro"],
-                dropdown: ["YouTube™", "YouTube [Embutir]"],
+                reloadFrame: ["Recarregar Quadro" ],
+                dropdown: ["YouTube™ [Embutir]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             ru: {
                 theaterMode: ["Театр"],
-                reloadFrame: ["Перезагрузить Рамку"],
-                dropdown: ["YouTube™", "YouTube [Вставить]"],
+                reloadFrame: ["Перезагрузить Рамку" ],
+                dropdown: ["YouTube™ [Вставить]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             ar: {
                 theaterMode: ["مسرح"],
-                reloadFrame: ["إعادة تحميل الإطار"],
-                dropdown: ["YouTube™", "YouTube [تضمين]"],
+                reloadFrame: ["إعادة تحميل الإطار" ],
+                dropdown: ["YouTube™ [تضمين]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             zh: {
                 theaterMode: ["剧院"],
-                reloadFrame: ["重新加载框架"],
-                dropdown: ["YouTube™", "YouTube [嵌入]"],
+                reloadFrame: ["重新加载框架" ],
+                dropdown: ["YouTube™ [嵌入]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             hi: {
                 theaterMode: ["रंगमंच"],
-                reloadFrame: ["फ्रेम पुनः लोड करें"],
-                dropdown: ["YouTube™", "YouTube [एम्बेड करें]"],
+                reloadFrame: ["फ्रेम पुनः लोड करें" ],
+                dropdown: ["YouTube™ [एम्बेड करें]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             sv: {
                 theaterMode: ["Teater"],
-                reloadFrame: ["Ladda om Ramen"],
-                dropdown: ["YouTube™", "YouTube [Bädda in]"],
+                reloadFrame: ["Ladda om Ramen" ],
+                dropdown: ["YouTube™ [Bädda in]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             no: {
                 theaterMode: ["Teater"],
-                reloadFrame: ["Last Inn Rammen på Nytt"],
-                dropdown: ["YouTube™", "YouTube [Bygg inn]"],
+                reloadFrame: ["Last Inn Rammen på Nytt" ],
+                dropdown: ["YouTube™ [Bygg inn]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             da: {
                 theaterMode: ["Teater"],
-                reloadFrame: ["Genindlæs Rammen"],
-                dropdown: ["YouTube™", "YouTube [Vložit]"],
+                reloadFrame: ["Genindlæs Rammen" ],
+                dropdown: ["YouTube™ [Vložit]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             cs: {
                 theaterMode: ["Divadlo"],
-                reloadFrame: ["Rámeček znovu načíst"],
-                dropdown: ["YouTube™", "YouTube [Vložit]"],
+                reloadFrame: ["Rámeček znovu načíst" ],
+                dropdown: ["YouTube™ [Vložit]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             hu: {
                 theaterMode: ["Színház"],
-                reloadFrame: ["Keret Újratöltése"],
-                dropdown: ["YouTube™", "YouTube [Beágyazás]"],
+                reloadFrame: ["Keret Újratöltése" ],
+                dropdown: ["YouTube™ [Beágyazás]", "yout-ube", "kavin.rocks", "gir.st"],
             },
+        
             tr: {
                 theaterMode: ["Tiyatro"],
-                reloadFrame: ["Çerçeveyi Yeniden Yükle"],
-                dropdown: ["YouTube™", "YouTube [Gömme]"],
+                reloadFrame: ["Çerçeveyi Yeniden Yükle" ],
+                dropdown: ["YouTube™ [Gömme]", "yout-ube", "kavin.rocks", "gir.st"],
             },
         };
 
@@ -680,7 +722,9 @@
         const options = [
             { value: "0", text: getText("dropdown", 0) },
             { value: "1", text: getText("dropdown", 1) },
-            //{ value: "2", text: "NSFW YouTube [Broken!]" } Fix later?
+            { value: "2", text: getText("dropdown", 2) },
+            { value: "3", text: getText("dropdown", 3) },
+            //{ value: "4", text: "NSFW YouTube [Broken!]" } Fix later?
         ];
         var htmlContent = options
             .map(

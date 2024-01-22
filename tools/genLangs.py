@@ -68,26 +68,26 @@ rf = [
 ]
 
 yt_eb = [
-    'YouTube [Embed]',
-    'YouTube [Einbetten]',
-    'YouTube [Incrustar]',
-    'YouTube [Intégrer]',
-    'YouTube [Incorpora]',
-    'YouTube [埋め込み]',
-    'YouTube [임베드]',
-    'YouTube [Insluiten]',
-    'YouTube [Osadź]',
-    'YouTube [Embutir]',
-    'YouTube [Вставить]',
-    'YouTube [تضمين]',
-    'YouTube [嵌入]',
-    'YouTube [एम्बेड करें]',
-    'YouTube [Bädda in]',
-    'YouTube [Bygg inn]',
-    'YouTube [Vložit]',
-    'YouTube [Vložit]',
-    'YouTube [Beágyazás]',
-    'YouTube [Gömme]'
+    '[Embed]',
+    '[Einbetten]',
+    '[Incrustar]',
+    '[Intégrer]',
+    '[Incorpora]',
+    '[埋め込み]',
+    '[임베드]',
+    '[Insluiten]',
+    '[Osadź]',
+    '[Embutir]',
+    '[Вставить]',
+    '[تضمين]',
+    '[嵌入]',
+    '[एम्बेड करें]',
+    '[Bädda in]',
+    '[Bygg inn]',
+    '[Vložit]',
+    '[Vložit]',
+    '[Beágyazás]',
+    '[Gömme]'
 ]
 
 for i in range(len(theater)):
@@ -95,5 +95,5 @@ for i in range(len(theater)):
     ''' + lang[i] + ''': {
         theaterMode: ["''' + theater[i] + '''"],
         reloadFrame: ["''' + rf[i] + '''" ],
-        dropdown: ["YouTube™", "''' + yt_eb[i] + '''" ],
+        dropdown: ["YouTube™ ''' + yt_eb[i] + '''", "yout-ube", "kavin.rocks", "gir.st"],
     },''')

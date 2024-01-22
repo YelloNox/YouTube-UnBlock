@@ -53,9 +53,15 @@ This script will not run if a block is not detected. Meaning, if the script does
 
 ## 🏠 Custom Sources
 
--   [yout-ube.com](https://yout-ube.com) - Should be fixed
+-   [YouTube™ [Embed]](https://yout-ube.com) - An official embed of the video.
+-   [yout-ube.com](https://yout-ube.com) - 3rd party, but some videos are age-restricted.
+-   NEW: [piped.kavin.rocks](piped.kavin.rocks) - Currently page embed (no theater mode).
+-   NEW: [subscriptions.gir.st](subscriptions.gir.st) - Currently page embed (no theater mode).
 -   Bugs, oh-no! ~~[nsfwyoutube.com](https://nsfwyoutube.com) - Fix might be coming soon (maybe)~~
--   Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
+
+Some sources allow playback of age-restricted videos and blocked content.
+
+> Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
 
 ## 📐 User Settings
 
