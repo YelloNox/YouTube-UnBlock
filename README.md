@@ -1,6 +1,6 @@
 # YouTube UnBlock
 
-**Status:** This project is fully(ish) functional as of 1/6/2024. (bugs bugs bugs. Can't catch-em-all)
+**Status:** This project is fully(ish) functional as of 1/21/2024. (bugs bugs bugs. Can't catch-em-all)
 
 ## ❓ Is this blocker getting in the way?
 
@@ -70,7 +70,7 @@ There is a `User Customization` section at the start of the script. Features:
 -   Toggle Theater Button Visibility: `disableTheaterToggle`
 -   Toggle Reload Button Visibility: `disableReloadToggle`
 -   Toggle Options Menu Visibility: `disableOptionsMenu`
--   [Language]: `language`
+-   Change Active Language: `language`
 
 ## 🫂 Language Options / Opciones de Idioma
 
