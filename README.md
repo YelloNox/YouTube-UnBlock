@@ -107,6 +107,7 @@ Language Options / Opciones de Idioma:
 
 -   [x] Theater Mode Toggle
 -   [x] Fix Bug: Frame loads multiple times! Add the check to each runtime.
+-   [x] Fix Bug: Frame loads multiple ... Again...
 -   [x] Add multi-language support (aka, translations with Google Translate (or ai))
 -   [ ] So... Playlists are broken :O. YouTube thinks the videos fail to load, then skips them, repeatedly, forever... fix?
 -   [ ] Setting saved to local storage (for something... sometime... idk...)
