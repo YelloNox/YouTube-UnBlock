@@ -61,7 +61,7 @@ This script will not run if a block is not detected. Meaning, if the script does
 
 Some sources allow playback of age-restricted videos and blocked content.
 
-> Recommend Some More to [Issues](https://github.com/YelloNolo/YouTube-UnBlock/issues/3)
+> Recommend Some More to [Issues](https://github.com/YelloNox/YouTube-UnBlock/issues/3)
 
 ## 📐 User Settings
 
@@ -74,7 +74,7 @@ There is a `User Customization` section at the start of the script. Features:
 
 ## 🫂 Language Options / Opciones de Idioma
 
-Read More: https://github.com/YelloNolo/YouTube-UnBlock/blob/main/language.md
+Read More: https://github.com/YelloNox/YouTube-UnBlock/blob/main/language.md
 
 To change your preferred language for the script, edit the `language` variable at the start of the script.
 
@@ -114,13 +114,13 @@ Language Options / Opciones de Idioma:
 
 ## 💔 Issues?
 
-If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNolo/YouTube-UnBlock/issues). I appreciate the feedback!
+If there are any issues, or you have a suggestion, please feel free to [open an issue](https://github.com/YelloNox/YouTube-UnBlock/issues). I appreciate the feedback!
 
 ## Other Locations
 
 You can currently find the script in:
 
--   [GitHub Repository](https://github.com/YelloNolo/YouTube-UnBlock/)
+-   [GitHub Repository](https://github.com/YelloNox/YouTube-UnBlock/)
 -   [Greasy Fork](https://greasyfork.org/en/scripts/477098-youtube-deblock)
 
 ---

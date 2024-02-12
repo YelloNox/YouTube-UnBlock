@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name            YouTube DeBlock
 // @description     Fully Working 2023 UnBlocker for YouTube. Get rid of that pesky blocker, and return my vids!
-// @author          YelloNolo
+// @author          YelloNox
 // @version         1.1.7
 // @created         2023-10-10
 // @namespace       https://yello.zip
-// @homepage        https://github.com/YelloNolo/YouTube-Adblock
+// @homepage        https://github.com/YelloNox/YouTube-UnBlock
 // @match           *://www.youtube.com/*
 // @grant           none
 // ==/UserScript==
@@ -17,14 +17,19 @@
     const disableTheaterToggle = false;
     const disableReloadToggle = false;
     const disableOptionsMenu = false;
-    /* Language INFO: https://github.com/YelloNolo/YouTube-UnBlock/blob/main/language.md */
+    var forceEnableEmbed = false;
+    /* Language INFO: https://github.com/YelloNox/YouTube-UnBlock/blob/main/language.md */
     const language = "en";
     /* End User Customization */
 
     // Any class the blocker uses
     const blockerClass = "ytd-enforcement-message-view-model";
     // Any class on the broken video (e.x. yt-playability-error-supported-renderers)
-    const ogVideoClass = "yt-playability-error-supported-renderers";
+    var ogVideoClass = "yt-playability-error-supported-renderers";
+    if (forceEnableEmbed) {
+        // Any class of the official video for force replacing
+        ogVideoClass = "html5-video-player";
+    }
     // Class of the parent for the custom content locaiton
     const customContentParentID = "end";
     // Original Youtube URL
@@ -66,11 +71,18 @@
     // Function that checks if the page is even blocked
     var theaterStartRunOnce = false;
     function checkClass() {
-        const elements = document.querySelectorAll("." + blockerClass);
+        const blockerElement = document.querySelectorAll("." + blockerClass);
+        const videoElement = document.querySelectorAll("." + ogVideoClass);
 
-        if (elements.length > 0) {
+        if (blockerElement.length > 0) {
             isBlocked = true;
             console.log("blocked [checkClass]: yes");
+        }
+
+        if (forceEnableEmbed && videoElement.length > 0) {
+            isBlocked = true;
+            forceEnableEmbed = false;
+            console.log("Forcing Unblock");
         }
 
         if (isBlocked) {

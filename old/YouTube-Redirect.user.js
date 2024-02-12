@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         YouTube Redirect
 // @description  Working 2023 adblock for YouTube video. Redirects all "youtube.com" links to yout-ube.com.
-// @author       YelloNolo
+// @author       YelloNox
 // @version      0.2
 // @date         2023-10-10
 // @namespace    https://yello.zip
-// @homepage     https://github.com/YelloNolo/YouTube-Adblock
+// @homepage     https://github.com/YelloNox/YouTube-Adblock
 // @match        *://www.youtube.com/*
 // @match        *://www.yout-ube.com/*
 // @match        *://www.youtube-nocookie.com/*
